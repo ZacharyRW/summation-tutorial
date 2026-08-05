@@ -1,4 +1,4 @@
 # Development and test tools for the educational examples.
 pytest>=9,<10
 pytest-cov>=7.1.0,<8
-ruff>=0.15.22,<1
+ruff>=0.16.1,<1
