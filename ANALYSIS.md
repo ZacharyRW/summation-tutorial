@@ -31,7 +31,7 @@ Recommended direction: retain the focused tutorial-plus-history identity, close 
 | `history/` | Labeled runnable provenance artifacts; `history/README.md` maps former names. |
 | `tests/` | Active pytest suite (153 collected tests in this audit). |
 | `notebooks/` | Optional historical-progression walkthrough. |
-| `.github/workflows/ci.yml` | Python 3.10, 3.11, and 3.14 test/lint matrix. |
+| `.github/workflows/ci.yml` | Test/lint matrix covering every supported Python version, 3.10 through 3.14. |
 | `requirements-*.txt`, `pyproject.toml` | Tooling and optional notebook dependency contracts. |
 
 ## Validation Results
@@ -55,7 +55,7 @@ CI matches the first two local checks only: it installs `requirements-dev.txt`, 
 
 | Existing item | Source | Current status | Verification | Still relevant? | Recommended action |
 | --- | --- | --- | --- | --- | --- |
-| Python 3.10+ baseline | Prior analysis/roadmap, `pyproject.toml`, CI | Confirmed | Metadata and Ruff target are `py310`; CI matrix declares 3.10/3.11/3.14. | Yes | Maintain. |
+| Python 3.10+ baseline | Prior analysis/roadmap, `pyproject.toml`, CI | Confirmed | Metadata and Ruff target are `py310`; CI matrix declares 3.10/3.11/3.12/3.13/3.14, matching the declared support range exactly. | Yes | Maintain; extend the matrix and the required-check list together whenever `requires-python` changes. |
 | Canonical one-shot CLI | Prior roadmap | Confirmed / completed | `--numbers` is implemented and smoke-tested. | No backlog item | Keep contract stable. |
 | Historical v3 statistics | Prior roadmap, GitHub issue #25 | Confirmed / completed | Implemented in `history/claude_v3_menu_demo.py`, covered by direct tests; issue #25 was closed with merged PR #56. | No backlog item | Keep the historical-provenance boundary. |
 | Historical notebook | Prior roadmap, GitHub issue #28 | Confirmed / completed | Notebook and dependencies exist; issue #28 was closed with merged PR #56. Execution is blocked only by this sandbox's socket restriction. | No backlog item | Verify on a normal host/CI before claiming a portable execution result. |
