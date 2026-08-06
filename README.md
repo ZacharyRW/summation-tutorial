@@ -57,12 +57,12 @@ python3 -m venv .venv
 
 ## Package-build status
 
-This is currently a source-based tutorial, not a supported distributable
-package. Its `pyproject.toml` supplies project and tool metadata, but the
-repository does not promise, validate, or publish wheels or source
-distributions. Do not rely on `pip install .` as a supported workflow. Any
-move to distribution support will add and validate the necessary build path
-before it is documented as supported.
+This is a source-based tutorial, not a distributable package. Its
+`pyproject.toml` contains only pytest and Ruff configuration; the repository
+does not define a package build backend or publish wheels/source distributions.
+Do not rely on `pip install .` as a supported workflow. Any move to
+distribution support will add and validate the necessary build path before it
+is documented as supported.
 
 ## Command-line use
 

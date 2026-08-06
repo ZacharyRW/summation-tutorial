@@ -20,7 +20,7 @@ Order work by learner impact, risk reduction, evidence strength, effort, depende
 
 ## Phase 2: Maintainability and Developer Experience
 
-- **PKG-001:** If distribution support is intended, add a build frontend/backend to the development validation path and build wheel+sdist in CI. Otherwise deliberately narrow/remove packaging expectations.
+- **PKG-001 — Completed 2026-08-06:** The source-only decision is enforced by removing PEP 517 build and package metadata; `pyproject.toml` now contains only tool configuration.
 - **DX-001:** Decide formatting scope for historical Python and the notebook; enforce the chosen Ruff format policy in CI.
 - **CI-001:** Add the chosen build/format/notebook checks only after they are deterministic and their support policy is documented.
 - **TEST-002:** Separate canonical-contract tests from historical demonstration tests in documentation and, if useful, pytest markers; use coverage for the maintained module rather than an aggregate historical percentage.
@@ -75,7 +75,7 @@ The live GitHub review is complete: the public description, topics, README prese
 | TEST-001 | Assert exact integer type contract | High | S | None | 1 (completed) | Integer parser tests fail if values become floats. |
 | NB-001 | Verify notebook on socket-capable host | Medium | S | Normal host/CI | 1 (completed) | Documented nbconvert command exits 0. |
 | GH-005 | Enable GitHub secret scanning and push protection | Medium | XS | None | 1 (completed) | Both controls are enabled and verified through the GitHub API. |
-| PKG-001 | Decide and validate package build | High | S-M | Maintainer decision | 2 | Wheel/sdist build is either green in CI or intentionally unsupported. |
+| PKG-001 | Narrow package expectations for the source tutorial | High | S-M | None | 2 (completed) | No build backend or package metadata remains; distribution is explicitly unsupported. |
 | DX-001 | Establish formatting policy | Medium | S | Maintainer decision | 2 | `ruff format --check` is green for selected scope. |
 | CI-001 | Align CI with supported validation | Medium | S | PKG-001/DX-001/NB-001 | 2 | Required checks match documented support. |
 | FEAT-001 | Explain numeric precision tradeoffs | Low | S | None | 3 | Lesson includes tested, readable comparison. |
