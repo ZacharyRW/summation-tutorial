@@ -1,6 +1,6 @@
 # Project Roadmap
 
-**Derived from:** `ANALYSIS.md` audited 2026-07-22; live GitHub `main` was `009058c` and local `main` was `0386973` (one commit ahead of `origin/main`).
+**Derived from:** `ANALYSIS.md` audited 2026-07-22 and reconciled through 2026-08-06.
 **Principle:** prioritize verified user-contract failures and release-confidence gaps before optional features; preserve historical artifacts unless a change explicitly selects them.
 
 ## Roadmap Principles
@@ -9,7 +9,7 @@ Order work by learner impact, risk reduction, evidence strength, effort, depende
 
 ## Phase 0: Immediate Safety and Repository Hygiene
 
-**Completed 2026-08-05.** No critical security issue, broken test suite, unsafe branch, or default-branch migration is required. Keep protected `main` as default and do not delete branches: it is the only remote branch. Do not push local changes without explicit approval.
+**Completed 2026-08-05.** No critical security issue, broken test suite, unsafe branch, or default-branch migration is required. Keep protected `main` as default and do not delete branches without explicit approval.
 
 ## Phase 1: Stabilization
 
@@ -46,7 +46,7 @@ require a selected audience, maintenance owner, and a new security review.
 
 - File input: defer until format, encoding, size/count bounds, finite-number policy, error behavior, and a security review are approved.
 - Automatic releases/dependency merging: do not add without an explicit release ownership policy.
-- Reformatting history: do not do it as cleanup unless maintainers choose archival uniformity over literal historical presentation. Narrow exception authorized 2026-08-05: `history/` and the notebook were edited to satisfy Ruff's default rule set after the 0.16 expansion. That covers lint compliance only and does not pre-decide `DX-001`, which remains a separate `ruff format` policy decision.
+- Reformatting history: do not do it as cleanup unless maintainers choose archival uniformity over literal historical presentation. Narrow exception authorized 2026-08-05: `history/` and the notebook were edited to satisfy Ruff's default rule set after the 0.16 expansion. That covers lint compliance only; the selected DX-001 policy excludes those archival artifacts from whole-file formatting enforcement.
 
 ## Documentation Plan
 
@@ -56,7 +56,7 @@ require a selected audience, maintenance owner, and a new security review.
 
 ## GitHub Improvement Plan
 
-The live GitHub review is complete: the public description, topics, README presentation, default branch, protections, Actions, Dependabot configuration, Issues, PRs, releases/tags, and repository features were verified. Keep the current description/topics and branch-protection rule; latest `main` CI is green and no Issues or PRs are open. Do not create releases, packages, a homepage, or showcase media unless a distribution goal is selected.
+The live GitHub review is complete: the public description, topics, README presentation, default branch, protections, Actions, Dependabot configuration, Issues, PRs, releases/tags, and repository features were verified. Keep the current description/topics and branch-protection rule. Do not create releases, packages, a homepage, or showcase media unless a distribution goal is selected.
 
 `GH-005` is complete: secret scanning and push protection were enabled and verified on 2026-08-05. These are preventive controls, not evidence of a current secret leak. If external contributions become an active goal, create focused issue forms/templates, a PR template, and a concise `CONTRIBUTING.md`; otherwise the 42% community-profile score is informational rather than a backlog defect. After `PKG-001`/`DX-001`, add only validated checks to the required-check policy. The social-preview asset remains a manual visual setting to review if public showcasing becomes important.
 
