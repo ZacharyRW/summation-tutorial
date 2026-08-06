@@ -2,13 +2,13 @@
 
 import math
 from collections.abc import Iterable
-from typing import Optional, Union
+from typing import Union
 
 Number = Union[int, float]
 MAX_INPUT_COUNT = 100
 
 
-def get_number(prompt: str, allow_float: bool = True) -> Optional[Number]:
+def get_number(prompt: str, allow_float: bool = True) -> Number | None:
     """Read one finite number, or return ``None`` when input is closed."""
     while True:
         try:
@@ -29,7 +29,7 @@ def get_number(prompt: str, allow_float: bool = True) -> Optional[Number]:
 
 def get_multiple_numbers(
     count: int, allow_float: bool = True
-) -> Optional[list[Number]]:
+) -> list[Number] | None:
     """Read between one and ``MAX_INPUT_COUNT`` numbers from the user."""
     if not 1 <= count <= MAX_INPUT_COUNT:
         print(f"Please enter a count from 1 to {MAX_INPUT_COUNT}.")

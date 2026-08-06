@@ -46,17 +46,21 @@ class TestModuleImports:
 
     def test_chatgpt_entry_point_delegates_to_canonical_demo(self):
         """The historical ChatGPT entry point must not fork core behavior."""
-        from history import chatgpt_v1_entrypoint
         from demos.summing_methods import main
+        from history import chatgpt_v1_entrypoint
 
         assert chatgpt_v1_entrypoint.main is main
 
     def test_function_availability(self):
         """Test that all expected functions are available."""
         from demos.summing_methods import (
-            add_plus, add_sum, add_operator,
-            sum_builtin, sum_reduce, sum_fsum,
-            parse_numbers
+            add_operator,
+            add_plus,
+            add_sum,
+            parse_numbers,
+            sum_builtin,
+            sum_fsum,
+            sum_reduce,
         )
 
         # Verify all functions are callable
@@ -74,7 +78,7 @@ class TestEndToEndWorkflows:
 
     def test_complete_two_number_workflow(self):
         """Test complete workflow for adding two numbers."""
-        from demos.summing_methods import add_plus, add_sum, add_operator
+        from demos.summing_methods import add_operator, add_plus, add_sum
 
         a, b = 15, 27
 
@@ -90,7 +94,7 @@ class TestEndToEndWorkflows:
 
     def test_complete_multiple_number_workflow(self):
         """Test complete workflow for summing multiple numbers."""
-        from demos.summing_methods import sum_builtin, sum_reduce, sum_fsum
+        from demos.summing_methods import sum_builtin, sum_fsum, sum_reduce
 
         numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -151,7 +155,7 @@ class TestCrossModuleConsistency:
 
     def test_all_two_number_methods_agree(self):
         """Test that all two-number methods produce consistent results."""
-        from demos.summing_methods import add_plus, add_sum, add_operator
+        from demos.summing_methods import add_operator, add_plus, add_sum
 
         test_cases = [
             (0, 0),
@@ -172,8 +176,9 @@ class TestCrossModuleConsistency:
 
     def test_all_n_number_methods_agree(self):
         """Test that all n-number methods produce consistent results."""
-        from demos.summing_methods import sum_builtin, sum_reduce, sum_fsum
         import math
+
+        from demos.summing_methods import sum_builtin, sum_fsum, sum_reduce
 
         test_cases = [
             [],
@@ -198,9 +203,13 @@ class TestDocstringsAndMetadata:
     def test_functions_have_docstrings(self):
         """Test that all public functions have docstrings."""
         from demos.summing_methods import (
-            add_plus, add_sum, add_operator,
-            sum_builtin, sum_reduce, sum_fsum,
-            parse_numbers
+            add_operator,
+            add_plus,
+            add_sum,
+            parse_numbers,
+            sum_builtin,
+            sum_fsum,
+            sum_reduce,
         )
 
         functions = [

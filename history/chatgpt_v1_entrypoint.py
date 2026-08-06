@@ -7,6 +7,5 @@ run the maintained example rather than a separate copy of its logic.
 
 from demos.summing_methods import main
 
-
 if __name__ == "__main__":
     main()
