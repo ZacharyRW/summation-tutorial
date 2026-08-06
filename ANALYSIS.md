@@ -6,7 +6,7 @@
 
 ## Executive Summary
 
-Summation Tutorial is a small Python 3.10+ educational project. Its maintained lesson is `demos/summing_methods.py`; `history/` deliberately preserves the original and AI-assisted iterations as runnable comparison material. The code is healthy for its stated local-learning purpose: the core CLI handles integer and finite-float inputs, the suite passes, Ruff lint passes, and the notebook dependencies install.
+Summation Tutorial is a small Python 3.12+ educational project. Its maintained lesson is `demos/summing_methods.py`; `history/` deliberately preserves the original and AI-assisted iterations as runnable comparison material. The code is healthy for its stated local-learning purpose: the core CLI handles integer and finite-float inputs, the suite passes, Ruff lint passes, and the notebook dependencies install.
 
 No confirmed security vulnerability or user-facing correctness defect was found. The main risks are maintenance confidence rather than runtime safety: CI does not build the declared Python distribution or check formatting/notebook execution; the development requirements omit the build frontend/backend needed for a non-isolated local build; several tests assert `int == float` and therefore do not protect the documented exact-integer type contract; and the prior planning documents were stale after commit `009058c`.
 
@@ -17,7 +17,7 @@ Recommended direction: retain the focused tutorial-plus-history identity, close 
 | Topic | Assessment |
 | --- | --- |
 | Purpose / audience | Teach several Python summation approaches to learners, while preserving the iteration history. |
-| Technology | Python 3.10+, `argparse`, stdlib numeric APIs; pytest, pytest-cov, Ruff; optional Jupyter/nbconvert. |
+| Technology | Python 3.12+, `argparse`, stdlib numeric APIs; pytest, pytest-cov, Ruff; optional Jupyter/nbconvert. |
 | Architecture | Local stdin/argv -> numeric parsing -> arithmetic helpers -> terminal output. Historical modules are separate runnable artifacts; no shared service, persistence, or external API. |
 | Features | Interactive two-/many-number lesson; exact integer and finite-float CLI mode; historical v1–v3 demos; v3 sign/statistics helper; progression notebook. |
 | Maturity | A maintained educational repository, not a deployed application or library release pipeline. |
@@ -31,7 +31,7 @@ Recommended direction: retain the focused tutorial-plus-history identity, close 
 | `history/` | Labeled runnable provenance artifacts; `history/README.md` maps former names. |
 | `tests/` | Active pytest suite (153 collected tests in this audit). |
 | `notebooks/` | Optional historical-progression walkthrough. |
-| `.github/workflows/ci.yml` | Test/lint matrix covering every supported Python version, 3.10 through 3.14. |
+| `.github/workflows/ci.yml` | Test/lint matrix covering every supported Python version, 3.12 through 3.14. |
 | `requirements-*.txt`, `pyproject.toml` | Tooling and optional notebook dependency contracts. |
 
 ## Validation Results
@@ -55,7 +55,7 @@ CI matches the first two local checks only: it installs `requirements-dev.txt`, 
 
 | Existing item | Source | Current status | Verification | Still relevant? | Recommended action |
 | --- | --- | --- | --- | --- | --- |
-| Python 3.10+ baseline | Prior analysis/roadmap, `pyproject.toml`, CI | Confirmed | Metadata and Ruff target are `py310`; CI matrix declares 3.10/3.11/3.12/3.13/3.14, matching the declared support range exactly. | Yes | Maintain; extend the matrix and the required-check list together whenever `requires-python` changes. |
+| Python 3.12+ baseline | Prior analysis/roadmap, `pyproject.toml`, CI | Confirmed | Metadata and Ruff target are `py312`; CI matrix declares 3.12/3.13/3.14, matching the declared support range exactly. Raised from 3.10 on 2026-08-05 ahead of the 3.10 end-of-life in October 2026. | Yes | Maintain; extend the matrix and the required-check list together whenever `requires-python` changes. |
 | Canonical one-shot CLI | Prior roadmap | Confirmed / completed | `--numbers` is implemented and smoke-tested. | No backlog item | Keep contract stable. |
 | Historical v3 statistics | Prior roadmap, GitHub issue #25 | Confirmed / completed | Implemented in `history/claude_v3_menu_demo.py`, covered by direct tests; issue #25 was closed with merged PR #56. | No backlog item | Keep the historical-provenance boundary. |
 | Historical notebook | Prior roadmap, GitHub issue #28 | Confirmed / completed | Notebook and dependencies exist; issue #28 was closed with merged PR #56. Execution is blocked only by this sandbox's socket restriction. | No backlog item | Verify on a normal host/CI before claiming a portable execution result. |

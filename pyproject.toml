@@ -7,7 +7,7 @@ name = "sum"
 version = "0.1.0"
 description = "Educational Python examples of summation techniques."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 license = { text = "GPL-3.0-only" }
 dependencies = []
 
@@ -15,7 +15,7 @@ dependencies = []
 testpaths = ["tests"]
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py312"
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
