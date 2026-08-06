@@ -13,6 +13,8 @@ from demos.summing_methods import (
     sum_reduce,
 )
 
+pytestmark = pytest.mark.canonical
+
 # ---------- Two-number methods ------------------------------------------------
 
 

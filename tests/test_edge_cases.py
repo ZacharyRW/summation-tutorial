@@ -11,6 +11,8 @@ from demos.summing_methods import (
     sum_fsum,
 )
 
+pytestmark = pytest.mark.canonical
+
 
 class TestBoundaryConditions:
     """Test boundary conditions and edge cases."""

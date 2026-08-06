@@ -100,7 +100,7 @@ The historical original program does not handle invalid input or EOF as graceful
 
 ## Architecture, Quality, Security, and Performance
 
-The architecture is appropriately simple: one canonical implementation, explicit historical separation, and no external services. The strongest design choice is avoiding duplicated maintained logic; the ChatGPT historical entrypoint delegates to the canonical lesson. The main debt is that the test suite mixes core contract tests, broad arithmetic demonstrations, and historical behavior, so the 153-test count does not map cleanly to maintained-code confidence.
+The architecture is appropriately simple: one canonical implementation, explicit historical separation, and no external services. The strongest design choice is avoiding duplicated maintained logic; the ChatGPT historical entrypoint delegates to the canonical lesson. Pytest `canonical` and `historical` markers now identify the maintained and archival suites, while unmarked integration tests explicitly cross that boundary. Coverage reporting for maintained confidence should target `demos.summing_methods` rather than aggregate historical code.
 
 Security posture is low-risk by design. All reviewed input reaches conversion, arithmetic, sorting, or output only; finite-float checks and EOF handling exist in maintained paths. Local resource exhaustion from enormous literals/iterables is not a cross-boundary security finding. File input should remain out of scope without explicit size/format/security design.
 

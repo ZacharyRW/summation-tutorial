@@ -17,6 +17,8 @@ from history.claude_v3_menu_demo import (
     main as main_v3,
 )
 
+pytestmark = pytest.mark.historical
+
 
 def test_v1_retries_then_returns_an_integer():
     with patch("builtins.input", side_effect=["not-a-number", "-7"]):

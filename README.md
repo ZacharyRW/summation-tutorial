@@ -44,6 +44,16 @@ CI runs the test and Ruff lint/format checks on Python 3.12, 3.13, and 3.14.
 It also executes the historical-progression notebook on Python 3.14. The
 source-only tutorial does not run a package build.
 
+The `canonical` marker selects tests for the maintained lesson; `historical`
+selects tests for the preserved comparison artifacts. `tests/test_integration.py`
+exercises both boundaries and remains unmarked. When assessing maintained-code
+coverage, scope it to the canonical module rather than combining it with
+history:
+
+```bash
+./.venv/bin/python -m pytest tests/ --cov=demos.summing_methods
+```
+
 ```bash
 # Create a repository-local environment and install the declared toolchain
 python3 -m venv .venv

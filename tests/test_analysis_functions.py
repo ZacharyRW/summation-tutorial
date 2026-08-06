@@ -4,6 +4,8 @@ import pytest
 
 from history.claude_v3_menu_demo import analyze_numbers, method_positive_negative_demo
 
+pytestmark = pytest.mark.historical
+
 
 @pytest.mark.parametrize(
     ("numbers", "expected"),

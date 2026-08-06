@@ -6,6 +6,8 @@ import pytest
 
 from demos.summing_methods import main, parse_numbers, show_two_number_demo
 
+pytestmark = pytest.mark.canonical
+
 
 def assert_exact_integer_result(result, expected):
     """Assert the integer parser preserved values and Python ``int`` types."""

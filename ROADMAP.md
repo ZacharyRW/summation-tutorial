@@ -23,7 +23,7 @@ Order work by learner impact, risk reduction, evidence strength, effort, depende
 - **PKG-001 — Completed 2026-08-06:** The source-only decision is enforced by removing PEP 517 build and package metadata; `pyproject.toml` now contains only tool configuration.
 - **DX-001 — Completed 2026-08-06:** Ruff format applies to `demos/` and `tests/`; `history/` and the historical notebook are excluded to preserve archival presentation. CI enforces the selected scope.
 - **CI-001 — Completed 2026-08-06:** CI checks tests, Ruff lint, and Ruff formatting across Python 3.12–3.14 and executes the historical notebook on Python 3.14. Package builds remain intentionally unsupported.
-- **TEST-002:** Separate canonical-contract tests from historical demonstration tests in documentation and, if useful, pytest markers; use coverage for the maintained module rather than an aggregate historical percentage.
+- **TEST-002 — Completed 2026-08-06:** `canonical` and `historical` pytest markers distinguish maintained and archival tests; cross-boundary integration tests remain unmarked, and coverage guidance scopes results to `demos.summing_methods`.
 
 ## Phase 3: Product Improvements
 

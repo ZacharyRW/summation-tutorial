@@ -1,5 +1,9 @@
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "canonical: tests for the maintained summation lesson",
+    "historical: tests for preserved historical demonstration artifacts",
+]
 
 [tool.ruff]
 target-version = "py312"
