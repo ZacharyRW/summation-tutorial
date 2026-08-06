@@ -2,9 +2,8 @@
 
 import math
 from collections.abc import Iterable
-from typing import Union
 
-Number = Union[int, float]
+Number = int | float
 MAX_INPUT_COUNT = 100
 
 

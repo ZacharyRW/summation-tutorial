@@ -8,9 +8,8 @@ import operator
 import sys
 from collections.abc import Iterable, Sequence
 from functools import reduce
-from typing import Union
 
-Number = Union[int, float]
+Number = int | float
 
 
 def parse_numbers(
