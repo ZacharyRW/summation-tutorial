@@ -2,13 +2,12 @@
 
 import math
 from collections.abc import Iterable
-from typing import Optional, Union
 
-Number = Union[int, float]
+Number = int | float
 MAX_INPUT_COUNT = 100
 
 
-def get_number(prompt: str, allow_float: bool = True) -> Optional[Number]:
+def get_number(prompt: str, allow_float: bool = True) -> Number | None:
     """Read one finite number, or return ``None`` when input is closed."""
     while True:
         try:
@@ -32,7 +31,7 @@ def get_number(prompt: str, allow_float: bool = True) -> Optional[Number]:
 
 def get_multiple_numbers(
     count: int, allow_float: bool = True
-) -> Optional[list[Number]]:
+) -> list[Number] | None:
     """Read between one and ``MAX_INPUT_COUNT`` numbers from the user."""
     if not 1 <= count <= MAX_INPUT_COUNT:
         print(f"Please enter a count from 1 to {MAX_INPUT_COUNT}.")
@@ -87,14 +86,14 @@ def analyze_numbers(numbers: Iterable[Number]) -> dict[str, object]:
         sorted_values = sorted(values)
         middle_index = len(sorted_values) // 2
         if len(sorted_values) % 2:
-            median: Optional[Number] = sorted_values[middle_index]
+            median: Number | None = sorted_values[middle_index]
         else:
             lower_middle = sorted_values[middle_index - 1]
             upper_middle = sorted_values[middle_index]
             median = (lower_middle + upper_middle) / 2
-        mean: Optional[Number] = total / len(values)
-        minimum: Optional[Number] = sorted_values[0]
-        maximum: Optional[Number] = sorted_values[-1]
+        mean: Number | None = total / len(values)
+        minimum: Number | None = sorted_values[0]
+        maximum: Number | None = sorted_values[-1]
     else:
         mean = median = minimum = maximum = None
 
@@ -135,7 +134,7 @@ def method_two_floats() -> None:
     print(f"Sum: {first} + {second} = {first + second}")
 
 
-def _read_count(prompt: str) -> Optional[int]:
+def _read_count(prompt: str) -> int | None:
     count = get_number(prompt, allow_float=False)
     if count is None:
         return None

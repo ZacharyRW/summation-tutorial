@@ -44,7 +44,7 @@ No expansion is committed. Hosted lessons, file input, network integrations, pub
 
 - File input: defer until format, encoding, size/count bounds, finite-number policy, error behavior, and a security review are approved.
 - Automatic releases/dependency merging: do not add without an explicit release ownership policy.
-- Reformatting history: do not do it as cleanup unless maintainers choose archival uniformity over literal historical presentation.
+- Reformatting history: do not do it as cleanup unless maintainers choose archival uniformity over literal historical presentation. Narrow exception authorized 2026-08-05: `history/` and the notebook were edited to satisfy Ruff's default rule set after the 0.16 expansion. That covers lint compliance only and does not pre-decide `DX-001`, which remains a separate `ruff format` policy decision.
 
 ## Documentation Plan
 

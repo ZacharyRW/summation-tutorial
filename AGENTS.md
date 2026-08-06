@@ -26,6 +26,7 @@ Summation Tutorial is an educational Python summation tutorial that preserves AI
 
 - Inspect current code, `ANALYSIS.md`, and `ROADMAP.md` before proposing or implementing work.
 - Preserve historical variants unless the request explicitly authorizes moving, deleting, or rewriting them. Keep their provenance labels accurate when the canonical lesson changes.
+- Exception, authorized 2026-08-05: `history/` and `notebooks/historical_progression.ipynb` were edited to clear Ruff lint findings when Ruff 0.16 expanded its default rule set. Import sorting and PEP 585/604 annotation modernization applied there deliberately, and are not a policy violation to revert. This authorization covers lint compliance only; whole-file reformatting remains out of scope pending `DX-001`.
 - Add focused regression tests for behavior changes. Do not claim coverage for a source function when a test exercises a local copy instead.
 - The canonical lesson supports a one-shot CLI through `python -m demos.summing_methods --numbers ...`; preserve no-argument interactive behavior and keep file input out of scope unless explicitly authorized with a new security review.
 - Keep documentation repository-relative and avoid volatile assertions about test counts, line counts, coverage percentages, or branch state unless freshly verified.

@@ -5,12 +5,12 @@ import math
 import pytest
 
 from demos.summing_methods import (
+    add_operator,
     add_plus,
     add_sum,
-    add_operator,
     sum_builtin,
-    sum_reduce,
     sum_fsum,
+    sum_reduce,
 )
 
 # ---------- Two-number methods ------------------------------------------------

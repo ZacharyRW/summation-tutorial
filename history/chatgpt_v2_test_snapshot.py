@@ -5,18 +5,19 @@ This snapshot is retained for provenance only.  The active core tests live in
 by the repository's pytest configuration.
 """
 import math
+
 import pytest
 
 # Prevent collection if this module is ever imported by a test collector.
 __test__ = False
 
 from demos.summing_methods import (  # type: ignore
+    add_operator,
     add_plus,
     add_sum,
-    add_operator,
     sum_builtin,
-    sum_reduce,
     sum_fsum,
+    sum_reduce,
 )
 
 # ---------- Two-number methods ------------------------------------------------
