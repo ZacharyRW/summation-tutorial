@@ -27,22 +27,22 @@ class TestModuleImports:
 
     def test_import_original_two_number_example(self):
         """Test importing the original historical two-number example."""
-        try:
-            example_path = REPO_ROOT / "history" / "original_two_number.py"
-            assert example_path.exists(), f"Example not found at {example_path}"
+        example_path = REPO_ROOT / "history" / "original_two_number.py"
+        assert example_path.exists(), f"Example not found at {example_path}"
 
+        try:
             spec = importlib.util.spec_from_file_location(
                 "history.original_two_number", str(example_path)
             )
             example_module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(example_module)
-
-            assert example_module is not None
-
-            assert hasattr(example_module, "main")
-            assert callable(example_module.main)
-        except Exception as e:
+        except ImportError as e:
             pytest.fail(f"Failed to import the original example: {e}")
+
+        assert example_module is not None
+
+        assert hasattr(example_module, "main")
+        assert callable(example_module.main)
 
     def test_chatgpt_entry_point_delegates_to_canonical_demo(self):
         """The historical ChatGPT entry point must not fork core behavior."""
@@ -131,11 +131,13 @@ class TestEndToEndWorkflows:
         from demos.summing_methods import parse_numbers, sum_builtin
 
         # Simulate user entering invalid input then valid input
-        with patch('builtins.input', side_effect=['invalid', '5 10 15']):
-            with patch('builtins.print'):  # Suppress error messages
-                numbers = parse_numbers("Enter: ", allow_float=False)
-                result = sum_builtin(numbers)
-                assert result == 30.0
+        with (
+            patch('builtins.input', side_effect=['invalid', '5 10 15']),
+            patch('builtins.print'),  # Suppress error messages
+        ):
+            numbers = parse_numbers("Enter: ", allow_float=False)
+            result = sum_builtin(numbers)
+            assert result == 30.0
 
     def test_mixed_workflow_integers_and_floats(self):
         """Test workflow mixing integers and floats."""
