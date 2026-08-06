@@ -25,3 +25,22 @@ jobs:
       - run: python -m pip install -r requirements-dev.txt
       - run: python -m pytest tests/
       - run: python -m ruff check .
+      - run: python -m ruff format --check .
+
+  notebook:
+    name: Historical progression notebook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: |
+            requirements-dev.txt
+            requirements-notebook.txt
+      - run: python -m pip install -r requirements-dev.txt -r requirements-notebook.txt
+      - run: >-
+          python -m jupyter nbconvert --to notebook --execute
+          --output historical_progression.executed.ipynb --output-dir /tmp
+          notebooks/historical_progression.ipynb

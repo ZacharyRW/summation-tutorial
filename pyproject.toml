@@ -1,21 +1,15 @@
-[build-system]
-requires = ["setuptools>=83.0.0"]
-build-backend = "setuptools.build_meta"
-
-[project]
-name = "sum"
-version = "0.1.0"
-description = "Educational Python examples of summation techniques."
-readme = "README.md"
-requires-python = ">=3.12"
-license = { text = "GPL-3.0-only" }
-dependencies = []
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "canonical: tests for the maintained summation lesson",
+    "historical: tests for preserved historical demonstration artifacts",
+]
 
 [tool.ruff]
 target-version = "py312"
+
+[tool.ruff.format]
+exclude = ["history/**", "notebooks/**"]
 
 [tool.ruff.lint.isort]
 combine-as-imports = true

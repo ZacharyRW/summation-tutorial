@@ -10,11 +10,10 @@ from collections.abc import Iterable, Sequence
 from functools import reduce
 
 Number = int | float
+PRECISION_EXAMPLE = (1e16, 1.0, 1.0, 1.0, -1e16)
 
 
-def parse_numbers(
-    prompt: str, allow_float: bool = False
-) -> list[Number] | None:
+def parse_numbers(prompt: str, allow_float: bool = False) -> list[Number] | None:
     """
     Read a space-separated line of finite numbers.
 
@@ -46,31 +45,44 @@ def parse_numbers(
 
 # --- Two-number sum variants -------------------------------------------------
 
+
 def add_plus(a: Number, b: Number) -> Number:
     """Direct addition with +."""
     return a + b
+
 
 def add_sum(a: Number, b: Number) -> Number:
     """Built-in sum over a fixed-size tuple."""
     return sum((a, b))
 
+
 def add_operator(a: Number, b: Number) -> Number:
     """operator.add function."""
     return operator.add(a, b)
 
+
 # --- N-number sum variants ---------------------------------------------------
+
 
 def sum_builtin(nums: Iterable[Number]) -> Number:
     """Built-in sum; fast for numeric lists."""
     return sum(nums)
 
+
 def sum_reduce(nums: Iterable[Number]) -> Number:
     """reduce + operator.add; educational."""
     return reduce(operator.add, nums, 0)
 
+
 def sum_fsum(nums: Iterable[Number]) -> float:
     """math.fsum; better numeric stability for floats."""
     return math.fsum(nums)
+
+
+def precision_example_results() -> tuple[float, float, float]:
+    """Compare the three N-number methods on a rounding-sensitive example."""
+    numbers = PRECISION_EXAMPLE
+    return sum_builtin(numbers), sum_reduce(numbers), sum_fsum(numbers)
 
 
 def parse_cli_numbers(
@@ -83,9 +95,7 @@ def parse_cli_numbers(
         try:
             number: Number = float(raw_number) if allow_float else int(raw_number)
         except ValueError as exc:
-            raise ValueError(
-                f"{raw_number!r} is not a valid {number_type}."
-            ) from exc
+            raise ValueError(f"{raw_number!r} is not a valid {number_type}.") from exc
         if allow_float and not math.isfinite(number):
             raise ValueError(f"{raw_number!r} is not a valid finite number.")
         numbers.append(number)
@@ -144,6 +154,17 @@ def show_many_number_demo() -> bool:
     return True
 
 
+def show_precision_demo() -> None:
+    """Compare modern ``sum``, ``reduce``, and ``math.fsum`` on float input."""
+    builtin, reduced, precise = precision_example_results()
+    print("\nPrecision note:")
+    print("  [1e16, 1.0, 1.0, 1.0, -1e16] mathematically totals 3.0")
+    print(f"  sum(nums)           -> {builtin}")
+    print(f"  reduce(add, nums)   -> {reduced}")
+    print(f"  math.fsum(nums)     -> {precise}")
+    print("  Modern Python improves float summation; reduce still adds naively.")
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the interactive lesson or one-shot command-line summation."""
     parser = build_argument_parser()
@@ -163,7 +184,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     print("== Summing in Python: multiple approaches ==")
     if not show_two_number_demo():
         return 0
-    show_many_number_demo()
+    if show_many_number_demo():
+        show_precision_demo()
     return 0
 
 

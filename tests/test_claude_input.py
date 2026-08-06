@@ -17,6 +17,8 @@ from history.claude_v3_menu_demo import (
     main as main_v3,
 )
 
+pytestmark = pytest.mark.historical
+
 
 def test_v1_retries_then_returns_an_integer():
     with patch("builtins.input", side_effect=["not-a-number", "-7"]):
@@ -55,7 +57,9 @@ def test_v3_menu_handles_eof(capsys):
         (get_multiple_numbers_v3, MAX_INPUT_COUNT_V3),
     ],
 )
-def test_claude_multiple_number_limit_is_enforced(get_multiple_numbers, maximum, capsys):
+def test_claude_multiple_number_limit_is_enforced(
+    get_multiple_numbers, maximum, capsys
+):
     assert get_multiple_numbers(0) is None
     assert get_multiple_numbers(maximum + 1) is None
     assert f"1 to {maximum}" in capsys.readouterr().out

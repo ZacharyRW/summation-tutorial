@@ -44,12 +44,12 @@ Recommended direction: retain the focused tutorial-plus-history identity. Phase 
 | Coverage | Observed | `pytest --cov=demos --cov=history`: 55% across maintained plus intentionally historical files; canonical lesson 88%, historical artifacts vary 0–67%. This is diagnostic, not a project coverage target. |
 | Compile check | Passed | `compileall` completed for `demos`, `history`, and `tests`. |
 | CLI smoke tests | Passed | Exact integer and finite-float modes returned expected sums; `nan` exited with argparse error status 2. |
-| Formatting check | Failed | `ruff format --check .` would reformat 12 files, including historical code and the notebook. CI does not run this check. |
-| Package build | Intentionally unsupported | The project is a source-based tutorial. It does not promise, validate, or publish wheel/source-distribution artifacts; a supported build path requires a new maintainer decision. |
+| Formatting check | Scoped policy selected | Ruff formatting applies to maintained Python and active tests; historical code and the notebook are excluded to preserve their archival presentation. CI enforcement is tracked by CI-001. |
+| Package build | Intentionally unsupported | The project is a source-based tutorial. `pyproject.toml` contains only tool configuration; no build backend or package metadata remains. A supported build path requires a new maintainer decision. |
 | Notebook execution | Passed on normal host | On 2026-08-05, the documented `jupyter nbconvert --to notebook --execute` command exited 0 with Python 3.14.6 and nbconvert 7.17.1, writing a disposable artifact to `/tmp/historical_progression.executed.ipynb`. The tool sandbox itself still prohibits binding the local kernel port. |
 | Type/static analysis | Not configured | No type checker or type-checking configuration is declared. |
 
-CI matches the first two local checks only: it installs `requirements-dev.txt`, then runs pytest and Ruff lint. It does not build, format-check, execute the notebook, or run a type checker.
+CI installs `requirements-dev.txt`, then runs pytest, Ruff lint, and Ruff format checks across Python 3.12–3.14. A separate Python 3.14 job installs `requirements-notebook.txt` and executes the historical-progression notebook. It intentionally does not build a package or run a type checker.
 
 ## Existing Issue Verification
 
@@ -100,7 +100,7 @@ The historical original program does not handle invalid input or EOF as graceful
 
 ## Architecture, Quality, Security, and Performance
 
-The architecture is appropriately simple: one canonical implementation, explicit historical separation, and no external services. The strongest design choice is avoiding duplicated maintained logic; the ChatGPT historical entrypoint delegates to the canonical lesson. The main debt is that the test suite mixes core contract tests, broad arithmetic demonstrations, and historical behavior, so the 153-test count does not map cleanly to maintained-code confidence.
+The architecture is appropriately simple: one canonical implementation, explicit historical separation, and no external services. The strongest design choice is avoiding duplicated maintained logic; the ChatGPT historical entrypoint delegates to the canonical lesson. Pytest `canonical` and `historical` markers now identify the maintained and archival suites, while unmarked integration tests explicitly cross that boundary. Coverage reporting for maintained confidence should target `demos.summing_methods` rather than aggregate historical code.
 
 Security posture is low-risk by design. All reviewed input reaches conversion, arithmetic, sorting, or output only; finite-float checks and EOF handling exist in maintained paths. Local resource exhaustion from enormous literals/iterables is not a cross-boundary security finding. File input should remain out of scope without explicit size/format/security design.
 
@@ -134,7 +134,13 @@ Live branch inspection found one remote branch, `main`, at `009058c`; it is the 
 
 ## Product Opportunities and Recommended Priorities
 
-Near term: decide DX-001. Product ideas that fit: a short explanation of accuracy differences among `sum`, `reduce`, and `fsum`; optional property-based tests for numeric invariants; and a CI notebook smoke test now that normal-host execution is verified. Larger directions (file input, web lesson, hosted notebook, integrations) require clear audience demand and a new security/privacy design. Do not pursue file input merely for feature breadth, automatic releases, or a generic web frontend without a defined educational need.
+The precision lesson now compares `sum`, `reduce`, and `math.fsum` with a small deterministic example. Property-based tests are deliberately not selected: clear deterministic cases better fit the tutorial's current scale. Larger directions (file input, web lesson, hosted notebook, integrations) require clear audience demand and a new security/privacy design. Do not pursue file input merely for feature breadth, automatic releases, or a generic web frontend without a defined educational need.
+
+## Remaining Planned Work
+
+No Phase 0–4 implementation work remains selected. The roadmap retains only
+conditional expansion, contribution/process documentation, distribution, and
+release-policy ideas that require a maintainer decision before implementation.
 
 ## Limitations
 

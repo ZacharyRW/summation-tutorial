@@ -4,6 +4,8 @@ import pytest
 
 from demos.summing_methods import main, parse_cli_numbers
 
+pytestmark = pytest.mark.canonical
+
 
 def test_cli_sums_exact_integers(capsys):
     """One-shot integer mode preserves exact Python integer arithmetic."""

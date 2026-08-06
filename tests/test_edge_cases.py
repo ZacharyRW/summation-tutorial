@@ -1,4 +1,5 @@
 """Tests for edge cases and boundary conditions in summation."""
+
 import math
 import sys
 
@@ -9,6 +10,8 @@ from demos.summing_methods import (
     sum_builtin,
     sum_fsum,
 )
+
+pytestmark = pytest.mark.canonical
 
 
 class TestBoundaryConditions:
@@ -46,35 +49,35 @@ class TestBoundaryConditions:
         nums = [large, large]
         result = sum_builtin(nums)
         # This might be infinity depending on the values
-        assert result == float('inf') or math.isfinite(result)
+        assert result == float("inf") or math.isfinite(result)
 
     def test_infinity_handling(self):
         """Test handling of infinity values."""
-        nums = [float('inf'), 1, 2, 3]
-        assert sum_builtin(nums) == float('inf')
-        assert sum_fsum(nums) == float('inf')
+        nums = [float("inf"), 1, 2, 3]
+        assert sum_builtin(nums) == float("inf")
+        assert sum_fsum(nums) == float("inf")
 
     def test_negative_infinity_handling(self):
         """Test handling of negative infinity."""
-        nums = [float('-inf'), 1, 2, 3]
-        assert sum_builtin(nums) == float('-inf')
-        assert sum_fsum(nums) == float('-inf')
+        nums = [float("-inf"), 1, 2, 3]
+        assert sum_builtin(nums) == float("-inf")
+        assert sum_fsum(nums) == float("-inf")
 
     def test_infinity_minus_infinity(self):
         """Test inf + (-inf) = nan."""
-        nums = [float('inf'), float('-inf')]
+        nums = [float("inf"), float("-inf")]
         result = sum_builtin(nums)
         assert math.isnan(result)
 
     def test_nan_propagation(self):
         """Test that NaN propagates through sum."""
-        nums = [1, 2, float('nan'), 3]
+        nums = [1, 2, float("nan"), 3]
         result = sum_builtin(nums)
         assert math.isnan(result)
 
     def test_nan_in_fsum(self):
         """Test NaN handling in fsum."""
-        nums = [1, 2, float('nan'), 3]
+        nums = [1, 2, float("nan"), 3]
         result = sum_fsum(nums)
         assert math.isnan(result)
 
@@ -100,8 +103,10 @@ class TestFloatingPointPrecision:
 
         # fsum should be more accurate
         expected = 1e-13  # 1e-16 * 1000
-        assert abs(result_fsum - expected) < abs(result_builtin - expected) or \
-               abs(result_fsum - expected) < 1e-14
+        assert (
+            abs(result_fsum - expected) < abs(result_builtin - expected)
+            or abs(result_fsum - expected) < 1e-14
+        )
 
     def test_catastrophic_cancellation(self):
         """Test catastrophic cancellation scenario."""

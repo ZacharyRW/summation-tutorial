@@ -26,10 +26,12 @@ Summation Tutorial is an educational Python summation tutorial that preserves AI
 
 - Inspect current code, `ANALYSIS.md`, and `ROADMAP.md` before proposing or implementing work.
 - Preserve historical variants unless the request explicitly authorizes moving, deleting, or rewriting them. Keep their provenance labels accurate when the canonical lesson changes.
-- Exception, authorized 2026-08-05: `history/` and `notebooks/historical_progression.ipynb` were edited to clear Ruff lint findings when Ruff 0.16 expanded its default rule set. Import sorting and PEP 585/604 annotation modernization applied there deliberately, and are not a policy violation to revert. This authorization covers lint compliance only; whole-file reformatting remains out of scope pending `DX-001`.
+- Exception, authorized 2026-08-05: `history/` and `notebooks/historical_progression.ipynb` were edited to clear Ruff lint findings when Ruff 0.16 expanded its default rule set. Import sorting and PEP 585/604 annotation modernization applied there deliberately, and are not a policy violation to revert. This authorization covers lint compliance only; their whole-file formatting remains out of scope under the selected DX-001 policy.
+- Ruff formatting applies to `demos/` and `tests/`. The archival `history/` artifacts and `notebooks/historical_progression.ipynb` are excluded from formatting enforcement to preserve their historical presentation, but remain in the Ruff lint scope.
 - Add focused regression tests for behavior changes. Do not claim coverage for a source function when a test exercises a local copy instead.
+- Use `canonical` and `historical` pytest markers to distinguish maintained-lesson tests from preserved historical demonstrations. Treat unmarked integration tests as cross-boundary coverage. When reporting coverage for the maintained lesson, scope it to `demos.summing_methods`.
 - The canonical lesson supports a one-shot CLI through `python -m demos.summing_methods --numbers ...`; preserve no-argument interactive behavior and keep file input out of scope unless explicitly authorized with a new security review.
-- The repository is currently a source-based tutorial, not a supported distributable package. `pyproject.toml` carries project/tool metadata; do not add, document, or rely on package-build or installation workflows unless a maintainer explicitly selects distribution support.
+- The repository is a source-based tutorial, not a supported distributable package. `pyproject.toml` carries only pytest and Ruff configuration; do not add, document, or rely on package-build or installation workflows unless a maintainer explicitly selects distribution support.
 - Keep documentation repository-relative and avoid volatile assertions about test counts, line counts, coverage percentages, or branch state unless freshly verified.
 - Use clear docstrings, type hints where they improve the lesson, PEP 8 formatting, and user-facing validation/error messages.
 - Do not shadow built-ins such as `sum`.
@@ -40,6 +42,6 @@ Summation Tutorial is an educational Python summation tutorial that preserves AI
 
 ## Verification and Git
 
-- Create a repository-local environment with `python3 -m venv .venv`, install the declared development tools with `./.venv/bin/python -m pip install -r requirements-dev.txt`, then run `./.venv/bin/python -m pytest tests/` and `./.venv/bin/python -m ruff check .`. The CI workflow runs the same checks.
+- Create a repository-local environment with `python3 -m venv .venv`, install the declared development tools with `./.venv/bin/python -m pip install -r requirements-dev.txt`, then run `./.venv/bin/python -m pytest tests/`, `./.venv/bin/python -m ruff check .`, and `./.venv/bin/python -m ruff format --check .`. CI runs those checks on Python 3.12–3.14 and separately executes the notebook with `requirements-notebook.txt` on Python 3.14.
 - Before making Git claims, check `git branch --show-current`, `git rev-parse --short HEAD`, and `git status --short`.
 - Push only when explicitly requested. Confirm the branch and staged scope immediately before committing or pushing.

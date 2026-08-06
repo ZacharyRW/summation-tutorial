@@ -26,6 +26,24 @@ provenance.
 - Functional: `reduce(operator.add, nums, 0)`
 - High precision: `math.fsum(nums)`
 
+## Floating-point precision
+
+For ordinary values, `sum`, `reduce(operator.add, ...)`, and `math.fsum` agree.
+Floating-point rounding can make their results differ, though. The interactive
+lesson includes this reproducible example:
+
+```python
+from demos.summing_methods import precision_example_results
+
+assert precision_example_results() == (3.0, 0.0, 3.0)
+```
+
+The mathematical total is `3.0`. On supported modern Python versions, builtin
+`sum` uses improved float summation and matches `math.fsum` here; the direct
+`reduce(operator.add, ...)` accumulation loses the small values beside `1e16`.
+Use `math.fsum` when improved floating-point accuracy matters, especially when
+you need its documented numerical behavior across input patterns.
+
 ## Input Behavior
 
 - Integer prompts accept whole numbers and preserve their exact Python `int`
@@ -40,6 +58,20 @@ provenance.
 
 The repository includes a pytest suite covering core summation behavior, input validation, edge cases, and integration paths. `tests/test_summation_methods.py` is the single active core arithmetic suite; `history/chatgpt_v2_test_snapshot.py` is retained only as a historical test snapshot. The project requires Python 3.12 or later. Current test totals and coverage are not claimed until CI-generated results are available.
 
+CI runs the test and Ruff lint/format checks on Python 3.12, 3.13, and 3.14.
+It also executes the historical-progression notebook on Python 3.14. The
+source-only tutorial does not run a package build.
+
+The `canonical` marker selects tests for the maintained lesson; `historical`
+selects tests for the preserved comparison artifacts. `tests/test_integration.py`
+exercises both boundaries and remains unmarked. When assessing maintained-code
+coverage, scope it to the canonical module rather than combining it with
+history:
+
+```bash
+./.venv/bin/python -m pytest tests/ --cov=demos.summing_methods
+```
+
 ```bash
 # Create a repository-local environment and install the declared toolchain
 python3 -m venv .venv
@@ -53,16 +85,27 @@ python3 -m venv .venv
 
 # Run the configured linter
 ./.venv/bin/python -m ruff check .
+
+# Check formatting for maintained Python sources and active tests
+./.venv/bin/python -m ruff format --check .
 ```
+
+## Formatting policy
+
+Ruff formatting is enforced for the maintained lesson and active test suite.
+The preserved `history/` artifacts and the historical-progression notebook are
+excluded to retain their archival presentation; they remain subject to Ruff
+lint. Run `./.venv/bin/python -m ruff format demos tests` when intentionally
+reformatting maintained Python files.
 
 ## Package-build status
 
-This is currently a source-based tutorial, not a supported distributable
-package. Its `pyproject.toml` supplies project and tool metadata, but the
-repository does not promise, validate, or publish wheels or source
-distributions. Do not rely on `pip install .` as a supported workflow. Any
-move to distribution support will add and validate the necessary build path
-before it is documented as supported.
+This is a source-based tutorial, not a distributable package. Its
+`pyproject.toml` contains only pytest and Ruff configuration; the repository
+does not define a package build backend or publish wheels/source distributions.
+Do not rely on `pip install .` as a supported workflow. Any move to
+distribution support will add and validate the necessary build path before it
+is documented as supported.
 
 ## Command-line use
 
