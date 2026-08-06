@@ -1,21 +1,39 @@
 # Lint Remediation Plan — resolve 42 Ruff findings and make the config version-proof
 
-*Prepared 2026-08-05. All counts in this document were verified on that date against Ruff 0.16.1 and the repository state at commit `5537658`.*
+*Prepared 2026-08-05, re-baselined the same day against `main` at commit `a12719e`. All counts were verified against Ruff 0.16.1.*
+
+## Status
+
+`main` is **green** on Python 3.10, 3.11, and 3.14. Nothing is blocked on this work — it is planned cleanup, not incident response.
+
+Five pull requests have landed since the outage began:
+
+| PR | Landed as | Effect |
+|---|---|---|
+| #63 | `8171be7` | stopgap `select` pin, and this document |
+| #58 | `cdad971` | `setup-python` v6 → v7 |
+| #59 | `ae67643` | `ipykernel >=7.3.0,<8` |
+| #60 | `6b372d0` | `nbconvert >=7.17.1,<8` |
+| #61 | `a12719e` | `ruff >=0.16.1,<1` |
+
+**The 42-finding baseline is unaffected by those merges.** `git diff --name-only 27c2efd origin/main -- '*.py' '*.ipynb'` is empty — no Python or notebook source changed — so every finding count, file path, and line number below still holds exactly.
 
 ## Context
 
-`requirements-dev.txt` pins `ruff>=0.15.22,<1` — an open-ended upper bound, so CI resolves whatever Ruff is newest at run time. Ruff 0.16 expanded its default rule set from **61 to 415 rules** for git-backed projects, so `ruff check .` now reports **42 errors** against code that has not changed.
+*How this started.* `requirements-dev.txt` pinned `ruff>=0.15.22,<1` — an open-ended upper bound, so CI resolved whatever Ruff was newest at run time. Ruff 0.16 expanded its default rule set from **61 to 415 rules** for git-backed projects, so `ruff check .` began reporting **42 errors** against code that had not changed.
 
-This is why all four open Dependabot pull requests (#58 `setup-python`, #59 `ipykernel`, #60 `nbconvert`, #61 `ruff`) fail CI with *identical* errors — none of them is at fault. The last green run on `main` was 2026-07-23; `main` would fail today if re-run. Every failing CI job ends with `Found 42 errors.` after `pytest` has already passed.
+That broke all four Dependabot pull requests (#58, #59, #60, #61) with *identical* errors — none of them was at fault. Every failing CI job ended with `Found 42 errors.` after `pytest` had already passed.
 
-Commit `5537658` added a stopgap `[tool.ruff.lint] select = ["E4","E7","E9","F"]` to `pyproject.toml`. That restores a green CI by *disabling* the new rules. This plan replaces that stopgap with the real fix.
+Commit `8171be7` added a stopgap `[tool.ruff.lint] select = ["E4","E7","E9","F"]` to `pyproject.toml`, restoring green CI by *disabling* the new rules. The four Dependabot PRs then merged cleanly. This plan replaces that stopgap with the real fix.
 
 **The stopgap stays in place until this plan is executed** — it is what currently keeps CI green.
+
+Note that #61 merged with `ruff>=0.16.1,<1`, which re-opened the same open-ended upper bound that caused the outage. It is currently harmless on two counts: 0.16.1 is the newest published Ruff, and the `select` pin overrides defaults regardless. It becomes live the moment step 7 removes `select` — which is why step 1 closes it first.
 
 ### Decisions already taken
 
 1. Remove the `select` pin entirely, enabling all Ruff default rules.
-2. Tighten `requirements-dev.txt` to `ruff>=0.16.0,<0.17`, so a future rule-set expansion arrives as a reviewable Dependabot PR rather than a surprise CI failure.
+2. Tighten `requirements-dev.txt` to `ruff>=0.16.1,<0.17`, so a future rule-set expansion arrives as a reviewable Dependabot PR rather than a surprise CI failure. This keeps the 0.16.1 floor that #61 introduced and reverts only its `<1` ceiling.
 3. Fix all 42 findings, **including those in `history/` and the notebook**. This explicitly overrides `AGENTS.md:28` ("Preserve historical variants unless the request explicitly authorizes … rewriting them") and `ROADMAP.md:47` ("Reformatting history: do not do it as cleanup …").
 4. For `BLE001`, move the asserts out of the `try` block rather than suppressing the rule.
 5. The supported Python floor stays at `>=3.10`. Python 3.10 reaches end-of-life in October 2026, but raising the floor is a separate support-policy change requiring its own CI-matrix update, and is deliberately out of scope here.
@@ -56,7 +74,7 @@ Remove `select` in the working tree early so the counts you see are honest, but 
 
 | # | Commit | Gate |
 |---|---|---|
-| 1 | Pin Ruff to `>=0.16.0,<0.17` in `requirements-dev.txt` | green; no code risk |
+| 1 | Pin Ruff to `>=0.16.1,<0.17` in `requirements-dev.txt`, reverting #61's ceiling only | green; no code risk |
 | 2 | Add `[tool.ruff.lint.isort] combine-as-imports = true` | 42 → 41, with zero code edits |
 | 3 | Autofix sweep, iterated to a fixpoint | 41 → 14; 153 tests pass |
 | 4 | UP007 ×3 by hand, then re-run autofix | 14 → 11; 153 tests pass |
@@ -179,22 +197,11 @@ Nothing in this change is specific to a version beyond 3.10, so 3.14 coverage ca
 
 ### Dependabot branches
 
-All four Dependabot branches are based on `origin/main` (`27c2efd`), not on this fix, so the fix must land on `main` before they can pass. Merge-preview them first:
-
-```bash
-for b in dependabot/github_actions/actions/setup-python-7 \
-         dependabot/pip/ipykernel-gte-7.3.0-and-lt-8 \
-         dependabot/pip/nbconvert-gte-7.17.1-and-lt-8; do
-  git merge --no-commit --no-ff origin/$b && ./.venv/bin/python -m ruff check . ; git merge --abort
-done
-```
-
-Those three touch only `.github/workflows/ci.yml` and `requirements-notebook.txt` — zero overlap with anything this plan changes — so they go green purely by inheriting the fix.
+No handling required. #58, #59, #60, and #61 all merged on 2026-08-05, and `main` is green at `a12719e`. Nothing is waiting on this work.
 
 ## Follow-ups this work must include
 
-1. **PR #61 works against decision 2.** It proposes `ruff>=0.16.0,<1`, re-opening the exact unbounded upper bound that caused this outage. Close it with an explanatory comment rather than merging it. Dependabot will not reopen it, because `>=0.16.0,<0.17` already satisfies its floor.
-2. **Amend `AGENTS.md:28` and `ROADMAP.md:47`** to record the maintainer authorization for editing `history/` and the notebook. Without that, a future contributor or agent reads those lines and reverts this work as a policy violation.
-3. **Refresh `ANALYSIS.md:43`**, which cites a passing lint result under a rule set that no longer exists. `AGENTS.md` forbids carrying stale verification claims.
-
-Once this lands on `main`, comment `@dependabot rebase` on #58, #59, and #60, and their CI will go green.
+1. **Amend `AGENTS.md:28` and `ROADMAP.md:47`** to record the maintainer authorization for editing `history/` and the notebook. Without that, a future contributor or agent reads those lines and reverts this work as a policy violation.
+2. **Refresh `ANALYSIS.md:43`**, which cites a passing lint result under a rule set that no longer exists. `AGENTS.md` forbids carrying stale verification claims.
+3. **Delete this file in the final commit.** Once the plan is executed it becomes a document describing work already done, and `AGENTS.md:12` warns specifically against leaving superseded reports in the tree where they read as current evidence.
+4. **Expect a new Dependabot PR for the ceiling.** After step 1 sets `<0.17`, Dependabot will raise a PR when Ruff 0.17 ships. That is the intended behavior — the reviewable gate that replaces surprise breakage.
