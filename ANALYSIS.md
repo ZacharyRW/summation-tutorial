@@ -49,7 +49,7 @@ Recommended direction: retain the focused tutorial-plus-history identity. Phase 
 | Notebook execution | Passed on normal host | On 2026-08-05, the documented `jupyter nbconvert --to notebook --execute` command exited 0 with Python 3.14.6 and nbconvert 7.17.1, writing a disposable artifact to `/tmp/historical_progression.executed.ipynb`. The tool sandbox itself still prohibits binding the local kernel port. |
 | Type/static analysis | Not configured | No type checker or type-checking configuration is declared. |
 
-CI matches the first two local checks only: it installs `requirements-dev.txt`, then runs pytest and Ruff lint. It does not build, format-check, execute the notebook, or run a type checker.
+CI installs `requirements-dev.txt`, then runs pytest, Ruff lint, and Ruff format checks across Python 3.12–3.14. A separate Python 3.14 job installs `requirements-notebook.txt` and executes the historical-progression notebook. It intentionally does not build a package or run a type checker.
 
 ## Existing Issue Verification
 

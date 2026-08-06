@@ -21,8 +21,8 @@ Order work by learner impact, risk reduction, evidence strength, effort, depende
 ## Phase 2: Maintainability and Developer Experience
 
 - **PKG-001 — Completed 2026-08-06:** The source-only decision is enforced by removing PEP 517 build and package metadata; `pyproject.toml` now contains only tool configuration.
-- **DX-001 — Selected 2026-08-06:** Ruff format applies to `demos/` and `tests/`; `history/` and the historical notebook are excluded to preserve archival presentation. CI enforcement follows in CI-001.
-- **CI-001:** Add the chosen build/format/notebook checks only after they are deterministic and their support policy is documented.
+- **DX-001 — Completed 2026-08-06:** Ruff format applies to `demos/` and `tests/`; `history/` and the historical notebook are excluded to preserve archival presentation. CI enforces the selected scope.
+- **CI-001 — Completed 2026-08-06:** CI checks tests, Ruff lint, and Ruff formatting across Python 3.12–3.14 and executes the historical notebook on Python 3.14. Package builds remain intentionally unsupported.
 - **TEST-002:** Separate canonical-contract tests from historical demonstration tests in documentation and, if useful, pytest markers; use coverage for the maintained module rather than an aggregate historical percentage.
 
 ## Phase 3: Product Improvements
@@ -76,8 +76,8 @@ The live GitHub review is complete: the public description, topics, README prese
 | NB-001 | Verify notebook on socket-capable host | Medium | S | Normal host/CI | 1 (completed) | Documented nbconvert command exits 0. |
 | GH-005 | Enable GitHub secret scanning and push protection | Medium | XS | None | 1 (completed) | Both controls are enabled and verified through the GitHub API. |
 | PKG-001 | Narrow package expectations for the source tutorial | High | S-M | None | 2 (completed) | No build backend or package metadata remains; distribution is explicitly unsupported. |
-| DX-001 | Establish formatting policy | Medium | S | Maintainer decision | 2 | `ruff format --check` is green for selected scope. |
-| CI-001 | Align CI with supported validation | Medium | S | PKG-001/DX-001/NB-001 | 2 | Required checks match documented support. |
+| DX-001 | Establish formatting policy | Medium | S | None | 2 (completed) | `ruff format --check` is green for the maintained scope. |
+| CI-001 | Align CI with supported validation | Medium | S | PKG-001/DX-001/NB-001 | 2 (completed) | CI matches the documented tests, lint, format, and notebook support. |
 | FEAT-001 | Explain numeric precision tradeoffs | Low | S | None | 3 | Lesson includes tested, readable comparison. |
 
 ## Success Metrics

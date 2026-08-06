@@ -40,6 +40,10 @@ provenance.
 
 The repository includes a pytest suite covering core summation behavior, input validation, edge cases, and integration paths. `tests/test_summation_methods.py` is the single active core arithmetic suite; `history/chatgpt_v2_test_snapshot.py` is retained only as a historical test snapshot. The project requires Python 3.12 or later. Current test totals and coverage are not claimed until CI-generated results are available.
 
+CI runs the test and Ruff lint/format checks on Python 3.12, 3.13, and 3.14.
+It also executes the historical-progression notebook on Python 3.14. The
+source-only tutorial does not run a package build.
+
 ```bash
 # Create a repository-local environment and install the declared toolchain
 python3 -m venv .venv

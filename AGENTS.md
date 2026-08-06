@@ -41,6 +41,6 @@ Summation Tutorial is an educational Python summation tutorial that preserves AI
 
 ## Verification and Git
 
-- Create a repository-local environment with `python3 -m venv .venv`, install the declared development tools with `./.venv/bin/python -m pip install -r requirements-dev.txt`, then run `./.venv/bin/python -m pytest tests/`, `./.venv/bin/python -m ruff check .`, and `./.venv/bin/python -m ruff format --check .`. The CI workflow runs the same checks.
+- Create a repository-local environment with `python3 -m venv .venv`, install the declared development tools with `./.venv/bin/python -m pip install -r requirements-dev.txt`, then run `./.venv/bin/python -m pytest tests/`, `./.venv/bin/python -m ruff check .`, and `./.venv/bin/python -m ruff format --check .`. CI runs those checks on Python 3.12–3.14 and separately executes the notebook with `requirements-notebook.txt` on Python 3.14.
 - Before making Git claims, check `git branch --show-current`, `git rev-parse --short HEAD`, and `git status --short`.
 - Push only when explicitly requested. Confirm the branch and staged scope immediately before committing or pushing.
