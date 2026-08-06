@@ -5,6 +5,15 @@ An educational Python summation tutorial. The maintained lesson is
 runnable historical AI-assisted iterations retained for comparison and
 provenance.
 
+## Project scope
+
+This is a local, source-based tutorial for Python 3.12+. It intentionally does
+not provide a distributable package, file input, network integration,
+persistence, or hosted execution. The maintained lesson and its tests are
+separate from the runnable historical artifacts. See [ANALYSIS.md](ANALYSIS.md)
+for the current assessment and [ROADMAP.md](ROADMAP.md) for conditional future
+work.
+
 ## Files
 
 | File | Description |
@@ -56,7 +65,11 @@ you need its documented numerical behavior across input patterns.
 
 ## Tests
 
-The repository includes a pytest suite covering core summation behavior, input validation, edge cases, and integration paths. `tests/test_summation_methods.py` is the single active core arithmetic suite; `history/chatgpt_v2_test_snapshot.py` is retained only as a historical test snapshot. The project requires Python 3.12 or later. Current test totals and coverage are not claimed until CI-generated results are available.
+The repository includes a pytest suite covering core summation behavior, input
+validation, edge cases, and integration paths. `tests/test_summation_methods.py`
+is the active core arithmetic suite; `history/chatgpt_v2_test_snapshot.py` is
+retained only as a historical test snapshot. The project requires Python 3.12
+or later.
 
 CI runs the test and Ruff lint/format checks on Python 3.12, 3.13, and 3.14.
 It also executes the historical-progression notebook on Python 3.14. The
