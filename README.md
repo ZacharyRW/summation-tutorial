@@ -26,6 +26,24 @@ provenance.
 - Functional: `reduce(operator.add, nums, 0)`
 - High precision: `math.fsum(nums)`
 
+## Floating-point precision
+
+For ordinary values, `sum`, `reduce(operator.add, ...)`, and `math.fsum` agree.
+Floating-point rounding can make their results differ, though. The interactive
+lesson includes this reproducible example:
+
+```python
+from demos.summing_methods import precision_example_results
+
+assert precision_example_results() == (3.0, 0.0, 3.0)
+```
+
+The mathematical total is `3.0`. On supported modern Python versions, builtin
+`sum` uses improved float summation and matches `math.fsum` here; the direct
+`reduce(operator.add, ...)` accumulation loses the small values beside `1e16`.
+Use `math.fsum` when improved floating-point accuracy matters, especially when
+you need its documented numerical behavior across input patterns.
+
 ## Input Behavior
 
 - Integer prompts accept whole numbers and preserve their exact Python `int`

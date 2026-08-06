@@ -134,7 +134,7 @@ Live branch inspection found one remote branch, `main`, at `009058c`; it is the 
 
 ## Product Opportunities and Recommended Priorities
 
-Near term: decide DX-001. Product ideas that fit: a short explanation of accuracy differences among `sum`, `reduce`, and `fsum`; optional property-based tests for numeric invariants; and a CI notebook smoke test now that normal-host execution is verified. Larger directions (file input, web lesson, hosted notebook, integrations) require clear audience demand and a new security/privacy design. Do not pursue file input merely for feature breadth, automatic releases, or a generic web frontend without a defined educational need.
+The precision lesson now compares `sum`, `reduce`, and `math.fsum` with a small deterministic example. Property-based tests are deliberately not selected: clear deterministic cases better fit the tutorial's current scale. Larger directions (file input, web lesson, hosted notebook, integrations) require clear audience demand and a new security/privacy design. Do not pursue file input merely for feature breadth, automatic releases, or a generic web frontend without a defined educational need.
 
 ## Limitations
 

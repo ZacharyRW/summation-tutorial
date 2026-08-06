@@ -10,6 +10,7 @@ from collections.abc import Iterable, Sequence
 from functools import reduce
 
 Number = int | float
+PRECISION_EXAMPLE = (1e16, 1.0, 1.0, 1.0, -1e16)
 
 
 def parse_numbers(prompt: str, allow_float: bool = False) -> list[Number] | None:
@@ -76,6 +77,12 @@ def sum_reduce(nums: Iterable[Number]) -> Number:
 def sum_fsum(nums: Iterable[Number]) -> float:
     """math.fsum; better numeric stability for floats."""
     return math.fsum(nums)
+
+
+def precision_example_results() -> tuple[float, float, float]:
+    """Compare the three N-number methods on a rounding-sensitive example."""
+    numbers = PRECISION_EXAMPLE
+    return sum_builtin(numbers), sum_reduce(numbers), sum_fsum(numbers)
 
 
 def parse_cli_numbers(
@@ -147,6 +154,17 @@ def show_many_number_demo() -> bool:
     return True
 
 
+def show_precision_demo() -> None:
+    """Compare modern ``sum``, ``reduce``, and ``math.fsum`` on float input."""
+    builtin, reduced, precise = precision_example_results()
+    print("\nPrecision note:")
+    print("  [1e16, 1.0, 1.0, 1.0, -1e16] mathematically totals 3.0")
+    print(f"  sum(nums)           -> {builtin}")
+    print(f"  reduce(add, nums)   -> {reduced}")
+    print(f"  math.fsum(nums)     -> {precise}")
+    print("  Modern Python improves float summation; reduce still adds naively.")
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the interactive lesson or one-shot command-line summation."""
     parser = build_argument_parser()
@@ -166,7 +184,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     print("== Summing in Python: multiple approaches ==")
     if not show_two_number_demo():
         return 0
-    show_many_number_demo()
+    if show_many_number_demo():
+        show_precision_demo()
     return 0
 
 

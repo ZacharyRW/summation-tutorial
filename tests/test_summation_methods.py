@@ -5,9 +5,12 @@ import math
 import pytest
 
 from demos.summing_methods import (
+    PRECISION_EXAMPLE,
     add_operator,
     add_plus,
     add_sum,
+    precision_example_results,
+    show_precision_demo,
     sum_builtin,
     sum_fsum,
     sum_reduce,
@@ -104,6 +107,18 @@ def test_float_precision_fsum_better_or_equal():
     builtin_err = abs(naive - 10_000.0)
     fsum_err = abs(precise - 10_000.0)
     assert fsum_err <= builtin_err
+
+
+def test_precision_lesson_shows_a_reproducible_difference(capsys):
+    assert PRECISION_EXAMPLE == (1e16, 1.0, 1.0, 1.0, -1e16)
+    assert precision_example_results() == (3.0, 0.0, 3.0)
+
+    show_precision_demo()
+    output = capsys.readouterr().out
+    assert "mathematically totals 3.0" in output
+    assert "sum(nums)           -> 3.0" in output
+    assert "math.fsum(nums)     -> 3.0" in output
+    assert "reduce still adds naively" in output
 
 
 # ---------- Type/robustness checks --------------------------------------------

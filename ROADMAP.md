@@ -27,8 +27,8 @@ Order work by learner impact, risk reduction, evidence strength, effort, depende
 
 ## Phase 3: Product Improvements
 
-- **FEAT-001:** Add a brief precision lesson comparing builtin `sum`, `reduce`, and `math.fsum`, with a small reproducible example.
-- **FEAT-002:** Add property-based tests only if the educational value exceeds setup complexity; retain clear deterministic examples.
+- **FEAT-001 — Completed 2026-08-06:** The canonical lesson and README compare builtin `sum`, `reduce`, and `math.fsum` on a tested rounding-sensitive example.
+- **FEAT-002 — Not selected 2026-08-06:** Deterministic examples communicate this small tutorial's numeric contracts clearly; property-based-test setup does not add enough educational value at this scope.
 
 ## Phase 4: Strategic Expansion
 
@@ -78,7 +78,7 @@ The live GitHub review is complete: the public description, topics, README prese
 | PKG-001 | Narrow package expectations for the source tutorial | High | S-M | None | 2 (completed) | No build backend or package metadata remains; distribution is explicitly unsupported. |
 | DX-001 | Establish formatting policy | Medium | S | None | 2 (completed) | `ruff format --check` is green for the maintained scope. |
 | CI-001 | Align CI with supported validation | Medium | S | PKG-001/DX-001/NB-001 | 2 (completed) | CI matches the documented tests, lint, format, and notebook support. |
-| FEAT-001 | Explain numeric precision tradeoffs | Low | S | None | 3 | Lesson includes tested, readable comparison. |
+| FEAT-001 | Explain numeric precision tradeoffs | Low | S | None | 3 (completed) | Lesson includes a tested, readable comparison. |
 
 ## Success Metrics
 
