@@ -44,7 +44,7 @@ Recommended direction: retain the focused tutorial-plus-history identity. Phase 
 | Coverage | Observed | `pytest --cov=demos --cov=history`: 55% across maintained plus intentionally historical files; canonical lesson 88%, historical artifacts vary 0–67%. This is diagnostic, not a project coverage target. |
 | Compile check | Passed | `compileall` completed for `demos`, `history`, and `tests`. |
 | CLI smoke tests | Passed | Exact integer and finite-float modes returned expected sums; `nan` exited with argparse error status 2. |
-| Formatting check | Failed | `ruff format --check .` would reformat 12 files, including historical code and the notebook. CI does not run this check. |
+| Formatting check | Scoped policy selected | Ruff formatting applies to maintained Python and active tests; historical code and the notebook are excluded to preserve their archival presentation. CI enforcement is tracked by CI-001. |
 | Package build | Intentionally unsupported | The project is a source-based tutorial. `pyproject.toml` contains only tool configuration; no build backend or package metadata remains. A supported build path requires a new maintainer decision. |
 | Notebook execution | Passed on normal host | On 2026-08-05, the documented `jupyter nbconvert --to notebook --execute` command exited 0 with Python 3.14.6 and nbconvert 7.17.1, writing a disposable artifact to `/tmp/historical_progression.executed.ipynb`. The tool sandbox itself still prohibits binding the local kernel port. |
 | Type/static analysis | Not configured | No type checker or type-checking configuration is declared. |

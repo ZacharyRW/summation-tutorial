@@ -1,4 +1,5 @@
 """Integration tests for complete workflows and module imports."""
+
 import importlib
 import importlib.util
 from pathlib import Path
@@ -16,12 +17,13 @@ class TestModuleImports:
         """Test importing demos.summing_methods module."""
         try:
             import demos.summing_methods
-            assert hasattr(demos.summing_methods, 'add_plus')
-            assert hasattr(demos.summing_methods, 'add_sum')
-            assert hasattr(demos.summing_methods, 'add_operator')
-            assert hasattr(demos.summing_methods, 'sum_builtin')
-            assert hasattr(demos.summing_methods, 'sum_reduce')
-            assert hasattr(demos.summing_methods, 'sum_fsum')
+
+            assert hasattr(demos.summing_methods, "add_plus")
+            assert hasattr(demos.summing_methods, "add_sum")
+            assert hasattr(demos.summing_methods, "add_operator")
+            assert hasattr(demos.summing_methods, "sum_builtin")
+            assert hasattr(demos.summing_methods, "sum_reduce")
+            assert hasattr(demos.summing_methods, "sum_fsum")
         except ImportError as e:
             pytest.fail(f"Failed to import demos.summing_methods: {e}")
 
@@ -112,7 +114,7 @@ class TestEndToEndWorkflows:
         """Test parsing numbers and then summing them."""
         from demos.summing_methods import parse_numbers, sum_builtin
 
-        with patch('builtins.input', return_value='10 20 30 40'):
+        with patch("builtins.input", return_value="10 20 30 40"):
             numbers = parse_numbers("Enter numbers: ", allow_float=False)
             result = sum_builtin(numbers)
             assert result == 100.0
@@ -121,7 +123,7 @@ class TestEndToEndWorkflows:
         """Test parsing floats and summing them."""
         from demos.summing_methods import parse_numbers, sum_fsum
 
-        with patch('builtins.input', return_value='1.5 2.5 3.5 4.5'):
+        with patch("builtins.input", return_value="1.5 2.5 3.5 4.5"):
             numbers = parse_numbers("Enter numbers: ", allow_float=True)
             result = sum_fsum(numbers)
             assert abs(result - 12.0) < 1e-10
@@ -132,8 +134,8 @@ class TestEndToEndWorkflows:
 
         # Simulate user entering invalid input then valid input
         with (
-            patch('builtins.input', side_effect=['invalid', '5 10 15']),
-            patch('builtins.print'),  # Suppress error messages
+            patch("builtins.input", side_effect=["invalid", "5 10 15"]),
+            patch("builtins.print"),  # Suppress error messages
         ):
             numbers = parse_numbers("Enter: ", allow_float=False)
             result = sum_builtin(numbers)
@@ -215,9 +217,13 @@ class TestDocstringsAndMetadata:
         )
 
         functions = [
-            add_plus, add_sum, add_operator,
-            sum_builtin, sum_reduce, sum_fsum,
-            parse_numbers
+            add_plus,
+            add_sum,
+            add_operator,
+            sum_builtin,
+            sum_reduce,
+            sum_fsum,
+            parse_numbers,
         ]
 
         for func in functions:

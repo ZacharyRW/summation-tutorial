@@ -53,7 +53,18 @@ python3 -m venv .venv
 
 # Run the configured linter
 ./.venv/bin/python -m ruff check .
+
+# Check formatting for maintained Python sources and active tests
+./.venv/bin/python -m ruff format --check .
 ```
+
+## Formatting policy
+
+Ruff formatting is enforced for the maintained lesson and active test suite.
+The preserved `history/` artifacts and the historical-progression notebook are
+excluded to retain their archival presentation; they remain subject to Ruff
+lint. Run `./.venv/bin/python -m ruff format demos tests` when intentionally
+reformatting maintained Python files.
 
 ## Package-build status
 

@@ -12,9 +12,7 @@ from functools import reduce
 Number = int | float
 
 
-def parse_numbers(
-    prompt: str, allow_float: bool = False
-) -> list[Number] | None:
+def parse_numbers(prompt: str, allow_float: bool = False) -> list[Number] | None:
     """
     Read a space-separated line of finite numbers.
 
@@ -46,27 +44,34 @@ def parse_numbers(
 
 # --- Two-number sum variants -------------------------------------------------
 
+
 def add_plus(a: Number, b: Number) -> Number:
     """Direct addition with +."""
     return a + b
+
 
 def add_sum(a: Number, b: Number) -> Number:
     """Built-in sum over a fixed-size tuple."""
     return sum((a, b))
 
+
 def add_operator(a: Number, b: Number) -> Number:
     """operator.add function."""
     return operator.add(a, b)
 
+
 # --- N-number sum variants ---------------------------------------------------
+
 
 def sum_builtin(nums: Iterable[Number]) -> Number:
     """Built-in sum; fast for numeric lists."""
     return sum(nums)
 
+
 def sum_reduce(nums: Iterable[Number]) -> Number:
     """reduce + operator.add; educational."""
     return reduce(operator.add, nums, 0)
+
 
 def sum_fsum(nums: Iterable[Number]) -> float:
     """math.fsum; better numeric stability for floats."""
@@ -83,9 +88,7 @@ def parse_cli_numbers(
         try:
             number: Number = float(raw_number) if allow_float else int(raw_number)
         except ValueError as exc:
-            raise ValueError(
-                f"{raw_number!r} is not a valid {number_type}."
-            ) from exc
+            raise ValueError(f"{raw_number!r} is not a valid {number_type}.") from exc
         if allow_float and not math.isfinite(number):
             raise ValueError(f"{raw_number!r} is not a valid finite number.")
         numbers.append(number)

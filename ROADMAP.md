@@ -21,7 +21,7 @@ Order work by learner impact, risk reduction, evidence strength, effort, depende
 ## Phase 2: Maintainability and Developer Experience
 
 - **PKG-001 — Completed 2026-08-06:** The source-only decision is enforced by removing PEP 517 build and package metadata; `pyproject.toml` now contains only tool configuration.
-- **DX-001:** Decide formatting scope for historical Python and the notebook; enforce the chosen Ruff format policy in CI.
+- **DX-001 — Selected 2026-08-06:** Ruff format applies to `demos/` and `tests/`; `history/` and the historical notebook are excluded to preserve archival presentation. CI enforcement follows in CI-001.
 - **CI-001:** Add the chosen build/format/notebook checks only after they are deterministic and their support policy is documented.
 - **TEST-002:** Separate canonical-contract tests from historical demonstration tests in documentation and, if useful, pytest markers; use coverage for the maintained module rather than an aggregate historical percentage.
 
