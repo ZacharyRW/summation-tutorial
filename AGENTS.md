@@ -20,7 +20,7 @@ Summation Tutorial is an educational Python summation tutorial that preserves AI
 - `history/chatgpt_v1_entrypoint.py`: historical ChatGPT entry point that delegates to the canonical lesson.
 - `history/chatgpt_v2_test_snapshot.py`: historical pytest snapshot; it is deliberately not collected.
 - `tests/`: pytest suite; `test_summation_methods.py` is the single active core arithmetic suite.
-- Python 3.10 or later is supported; do not reintroduce Python 3.9 compatibility without an explicit maintainer decision.
+- Python 3.12 or later is supported; do not reintroduce Python 3.11 or earlier compatibility without an explicit maintainer decision. The floor was raised from 3.10 to 3.12 by maintainer decision on 2026-08-05, ahead of the Python 3.10 end-of-life in October 2026.
 
 ## Working conventions
 
@@ -35,7 +35,7 @@ Summation Tutorial is an educational Python summation tutorial that preserves AI
 
 ## Current caution points
 
-- Historical test and coverage claims are non-authoritative. Use the declared Python 3.10+ toolchain and current CI results when reporting verification evidence.
+- Historical test and coverage claims are non-authoritative. Use the declared Python 3.12+ toolchain and current CI results when reporting verification evidence.
 
 ## Verification and Git
 

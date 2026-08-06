@@ -38,7 +38,7 @@ provenance.
 
 ## Tests
 
-The repository includes a pytest suite covering core summation behavior, input validation, edge cases, and integration paths. `tests/test_summation_methods.py` is the single active core arithmetic suite; `history/chatgpt_v2_test_snapshot.py` is retained only as a historical test snapshot. The project requires Python 3.10 or later. Current test totals and coverage are not claimed until CI-generated results are available.
+The repository includes a pytest suite covering core summation behavior, input validation, edge cases, and integration paths. `tests/test_summation_methods.py` is the single active core arithmetic suite; `history/chatgpt_v2_test_snapshot.py` is retained only as a historical test snapshot. The project requires Python 3.12 or later. Current test totals and coverage are not claimed until CI-generated results are available.
 
 ```bash
 # Create a repository-local environment and install the declared toolchain
