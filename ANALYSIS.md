@@ -136,6 +136,12 @@ Live branch inspection found one remote branch, `main`, at `009058c`; it is the 
 
 The precision lesson now compares `sum`, `reduce`, and `math.fsum` with a small deterministic example. Property-based tests are deliberately not selected: clear deterministic cases better fit the tutorial's current scale. Larger directions (file input, web lesson, hosted notebook, integrations) require clear audience demand and a new security/privacy design. Do not pursue file input merely for feature breadth, automatic releases, or a generic web frontend without a defined educational need.
 
+## Remaining Planned Work
+
+No Phase 0–4 implementation work remains selected. The roadmap retains only
+conditional expansion, contribution/process documentation, distribution, and
+release-policy ideas that require a maintainer decision before implementation.
+
 ## Limitations
 
 This audit authenticated to GitHub and inspected live metadata, public presentation, Issues, PRs, workflows, releases/tags, branch protection, and repository settings. It did not verify an uploaded social-preview image because GitHub does not expose that asset through the reviewed public/API surfaces. It also did not install a missing build frontend/backend, run a build in isolated networked mode, run a type checker (none is configured), or execute the notebook because the sandbox prohibits local kernel socket binding. No destructive cleanup, branch deletion, or GitHub-setting change was performed.

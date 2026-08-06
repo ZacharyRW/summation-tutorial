@@ -32,7 +32,9 @@ Order work by learner impact, risk reduction, evidence strength, effort, depende
 
 ## Phase 4: Strategic Expansion
 
-No expansion is committed. Hosted lessons, file input, network integrations, publishing automation, or web UI require a selected audience, maintenance owner, and a new security review.
+**Intentionally unselected 2026-08-06.** No expansion is committed. Hosted
+lessons, file input, network integrations, publishing automation, or web UI
+require a selected audience, maintenance owner, and a new security review.
 
 ## Exploratory Ideas
 
@@ -49,7 +51,7 @@ No expansion is committed. Hosted lessons, file input, network integrations, pub
 ## Documentation Plan
 
 1. Keep the completed integer type contract and source-tutorial package scope accurate as the lesson evolves.
-2. Decide `DX-001`; document historical-code formatting scope.
+2. Keep the selected Ruff-format scope and CI checks aligned if the maintained or archival boundaries change.
 3. Add `CONTRIBUTING.md`, `SECURITY.md`, changelog, or release guide only when their corresponding workflow exists.
 
 ## GitHub Improvement Plan
@@ -63,10 +65,10 @@ The live GitHub review is complete: the public description, topics, README prese
 | Category | Action |
 | --- | --- |
 | Safe to delete now | None. |
-| Review before deletion | None visible locally. |
-| Keep | The only remote branch, protected `main`; local `main` is one reviewed commit ahead of `origin/main`. |
+| Review before deletion | None. |
+| Keep | Protected default branch `main`. |
 | Rename or migrate | None; default branch is already `main`. |
-| Manual GitHub action required | None for branch hygiene. Push the local documentation commit only when it has been reviewed and explicitly approved. |
+| Manual GitHub action required | None for branch hygiene. Publish branches only after review and explicit approval. |
 
 ## Milestones
 
@@ -90,6 +92,6 @@ The live GitHub review is complete: the public description, topics, README prese
 
 ## Recommended Execution Order
 
-1. Decide formatting treatment for historical files, then implement DX-001/CI-001.
-2. Revisit PKG-001 only if a maintainer selects distribution support.
-3. Select at most one Phase 3 improvement.
+No committed implementation work remains. Revisit the deferred and exploratory
+items only after selecting an audience, maintenance owner, and—where relevant—a
+new security or release policy.
