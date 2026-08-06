@@ -8,9 +8,9 @@
 
 Summation Tutorial is a small Python 3.12+ educational project. Its maintained lesson is `demos/summing_methods.py`; `history/` deliberately preserves the original and AI-assisted iterations as runnable comparison material. The code is healthy for its stated local-learning purpose: the core CLI handles integer and finite-float inputs, the suite passes, Ruff lint passes, and the notebook dependencies install.
 
-No confirmed security vulnerability or user-facing correctness defect was found. The main risks are maintenance confidence rather than runtime safety: CI does not build the declared Python distribution or check formatting/notebook execution; the development requirements omit the build frontend/backend needed for a non-isolated local build; several tests assert `int == float` and therefore do not protect the documented exact-integer type contract; and the prior planning documents were stale after commit `009058c`.
+No confirmed security vulnerability or user-facing correctness defect was found. The remaining risks are maintenance confidence rather than runtime safety: CI does not check formatting or notebook execution; the repository intentionally does not support package distribution; and the prior planning documents were stale after commit `009058c`.
 
-Recommended direction: retain the focused tutorial-plus-history identity, close the test-contract and packaging-validation gaps, then choose between a deliberately formatted archival codebase and a full Ruff formatting policy. Treat file input, hosted execution, and broad product expansion as opt-in work requiring a new security review.
+Recommended direction: retain the focused tutorial-plus-history identity. Phase 1 has closed the integer-test-contract gap, documented the source-tutorial (non-distribution) scope, and verified notebook execution on a normal host. Treat file input, hosted execution, and broad product expansion as opt-in work requiring a new security review.
 
 ## Project Overview
 
@@ -45,8 +45,8 @@ Recommended direction: retain the focused tutorial-plus-history identity, close 
 | Compile check | Passed | `compileall` completed for `demos`, `history`, and `tests`. |
 | CLI smoke tests | Passed | Exact integer and finite-float modes returned expected sums; `nan` exited with argparse error status 2. |
 | Formatting check | Failed | `ruff format --check .` would reformat 12 files, including historical code and the notebook. CI does not run this check. |
-| Package build | Blocked / not verified | `python -m build` is unavailable; `pip wheel . --no-build-isolation` cannot import `setuptools.build_meta` because the local dev environment has neither `build` nor `setuptools`. |
-| Notebook execution | Environment-blocked | `nbconvert --execute` could not bind a local kernel port in this sandbox (`PermissionError: Operation not permitted`). Dependency installation and notebook conversion start succeeded; execute on a normal host/CI runner. |
+| Package build | Intentionally unsupported | The project is a source-based tutorial. It does not promise, validate, or publish wheel/source-distribution artifacts; a supported build path requires a new maintainer decision. |
+| Notebook execution | Passed on normal host | On 2026-08-05, the documented `jupyter nbconvert --to notebook --execute` command exited 0 with Python 3.14.6 and nbconvert 7.17.1, writing a disposable artifact to `/tmp/historical_progression.executed.ipynb`. The tool sandbox itself still prohibits binding the local kernel port. |
 | Type/static analysis | Not configured | No type checker or type-checking configuration is declared. |
 
 CI matches the first two local checks only: it installs `requirements-dev.txt`, then runs pytest and Ruff lint. It does not build, format-check, execute the notebook, or run a type checker.
@@ -72,13 +72,13 @@ Searches found no active TODO/FIXME/HACK/XXX markers, skipped or xfailed active 
 Affected: `pyproject.toml`, `requirements-dev.txt`, `.github/workflows/ci.yml`.
 Evidence: build frontend `build` and backend `setuptools` are absent from the declared local dev environment; a non-isolated wheel attempt fails importing `setuptools.build_meta`; CI does not build.
 Impact: packaging regressions can land unnoticed, and the repository does not yet prove whether it intends to be installable/distributable.
-Fix: make an explicit product decision. If packaging is supported, add a build tool/backend to a suitable dev/CI path and build wheel+sdist in CI; otherwise document that `pyproject.toml` is tooling metadata and remove release claims. **Confidence: high.**
+Current decision: source-tutorial scope. README and developer guidance now state that the project does not support, validate, or publish package distributions. Revisit only if a maintainer selects distribution support. **Confidence: high.**
 
-**TEST-001 — Several integer parser tests permit a type-contract regression**
+**TEST-001 — Several integer parser tests permit a type-contract regression — Resolved 2026-08-05**
 Affected: `tests/test_input_validation.py:12-143`, `demos/summing_methods.py:25-44`.
 Evidence: tests expect values such as `[42.0]` while the documented and implemented integer mode returns `int`; Python equality makes `[42] == [42.0]` pass. Only the large-integer case asserts types.
 Impact: a future conversion to floats could silently violate exact-integer teaching and precision behavior for ordinary inputs.
-Fix: assert integer values and types across integer-mode cases; retain explicit large-integer regression coverage. **Confidence: high.**
+Resolution: integer-mode tests now assert exact values and `int` types across ordinary, retry, whitespace, leading-zero, and exact-large-integer cases. **Confidence: high.**
 
 ### Low
 
@@ -134,7 +134,7 @@ Live branch inspection found one remote branch, `main`, at `009058c`; it is the 
 
 ## Product Opportunities and Recommended Priorities
 
-Near term: TEST-001, PKG-001, then DX-001. Product ideas that fit: a short explanation of accuracy differences among `sum`, `reduce`, and `fsum`; optional property-based tests for numeric invariants; and a normal-host CI notebook smoke test. Larger directions (file import, web lesson, hosted notebook, integrations) require clear audience demand and a new security/privacy design. Do not pursue file input merely for feature breadth, automatic releases, or a generic web frontend without a defined educational need.
+Near term: reauthenticate GitHub and decide GH-005, then decide DX-001. Product ideas that fit: a short explanation of accuracy differences among `sum`, `reduce`, and `fsum`; optional property-based tests for numeric invariants; and a CI notebook smoke test now that normal-host execution is verified. Larger directions (file input, web lesson, hosted notebook, integrations) require clear audience demand and a new security/privacy design. Do not pursue file input merely for feature breadth, automatic releases, or a generic web frontend without a defined educational need.
 
 ## Limitations
 

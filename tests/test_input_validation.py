@@ -6,6 +6,13 @@ import pytest
 from demos.summing_methods import main, parse_numbers, show_two_number_demo
 
 
+def assert_exact_integer_result(result, expected):
+    """Assert the integer parser preserved values and Python ``int`` types."""
+    assert result == expected
+    assert result is not None
+    assert all(isinstance(number, int) for number in result)
+
+
 class TestParseNumbers:
     """Test the parse_numbers function from demos.summing_methods."""
 
@@ -13,13 +20,13 @@ class TestParseNumbers:
         """Test parsing a single integer."""
         with patch('builtins.input', return_value='42'):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [42.0]
+            assert_exact_integer_result(result, [42])
 
     def test_parse_multiple_integers(self):
         """Test parsing multiple space-separated integers."""
         with patch('builtins.input', return_value='10 20 30'):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [10.0, 20.0, 30.0]
+            assert_exact_integer_result(result, [10, 20, 30])
 
     def test_parse_single_float(self):
         """Test parsing a single float."""
@@ -37,7 +44,7 @@ class TestParseNumbers:
         """Test parsing negative numbers."""
         with patch('builtins.input', return_value='-5 -10 15'):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [-5.0, -10.0, 15.0]
+            assert_exact_integer_result(result, [-5, -10, 15])
 
     def test_parse_mixed_positive_negative_floats(self):
         """Test parsing mixed positive and negative floats."""
@@ -49,20 +56,19 @@ class TestParseNumbers:
         """Test parsing zero."""
         with patch('builtins.input', return_value='0'):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [0.0]
+            assert_exact_integer_result(result, [0])
 
     def test_parse_large_numbers(self):
         """Test parsing large numbers."""
         with patch('builtins.input', return_value='1000000 2000000'):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [1000000.0, 2000000.0]
+            assert_exact_integer_result(result, [1_000_000, 2_000_000])
 
     def test_integer_mode_preserves_large_integer_precision(self):
         """Integer parsing must not round values larger than 2**53."""
         with patch('builtins.input', return_value='9007199254740993 1'):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [9007199254740993, 1]
-            assert all(isinstance(number, int) for number in result)
+            assert_exact_integer_result(result, [9_007_199_254_740_993, 1])
 
     def test_parse_scientific_notation(self):
         """Test parsing scientific notation (only with allow_float=True)."""
@@ -78,7 +84,7 @@ class TestParseNumbers:
             patch('builtins.print') as mock_print,
         ):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [3.0]
+            assert_exact_integer_result(result, [3])
             # Verify error message was printed
             mock_print.assert_called()
 
@@ -90,7 +96,7 @@ class TestParseNumbers:
             patch('builtins.print') as mock_print,
         ):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [42.0]
+            assert_exact_integer_result(result, [42])
             # Verify error message was printed
             mock_print.assert_called()
 
@@ -101,7 +107,7 @@ class TestParseNumbers:
             patch('builtins.print') as mock_print,
         ):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [10.0, 20.0]
+            assert_exact_integer_result(result, [10, 20])
             # Verify prompt was shown
             mock_print.assert_called()
 
@@ -112,7 +118,7 @@ class TestParseNumbers:
             patch('builtins.print') as mock_print,
         ):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [42.0]
+            assert_exact_integer_result(result, [42])
             mock_print.assert_called()
 
     def test_reject_inf_in_integer_mode(self):
@@ -148,13 +154,13 @@ class TestParseNumbers:
         """Test handling of extra whitespace."""
         with patch('builtins.input', return_value='  10   20  30  '):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [10.0, 20.0, 30.0]
+            assert_exact_integer_result(result, [10, 20, 30])
 
     def test_leading_zeros(self):
         """Test handling of leading zeros."""
         with patch('builtins.input', return_value='007 0123'):
             result = parse_numbers("Enter: ", allow_float=False)
-            assert result == [7.0, 123.0]
+            assert_exact_integer_result(result, [7, 123])
 
     def test_negative_zero(self):
         """Test parsing negative zero."""

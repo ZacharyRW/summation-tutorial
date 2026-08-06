@@ -29,6 +29,7 @@ Summation Tutorial is an educational Python summation tutorial that preserves AI
 - Exception, authorized 2026-08-05: `history/` and `notebooks/historical_progression.ipynb` were edited to clear Ruff lint findings when Ruff 0.16 expanded its default rule set. Import sorting and PEP 585/604 annotation modernization applied there deliberately, and are not a policy violation to revert. This authorization covers lint compliance only; whole-file reformatting remains out of scope pending `DX-001`.
 - Add focused regression tests for behavior changes. Do not claim coverage for a source function when a test exercises a local copy instead.
 - The canonical lesson supports a one-shot CLI through `python -m demos.summing_methods --numbers ...`; preserve no-argument interactive behavior and keep file input out of scope unless explicitly authorized with a new security review.
+- The repository is currently a source-based tutorial, not a supported distributable package. `pyproject.toml` carries project/tool metadata; do not add, document, or rely on package-build or installation workflows unless a maintainer explicitly selects distribution support.
 - Keep documentation repository-relative and avoid volatile assertions about test counts, line counts, coverage percentages, or branch state unless freshly verified.
 - Use clear docstrings, type hints where they improve the lesson, PEP 8 formatting, and user-facing validation/error messages.
 - Do not shadow built-ins such as `sum`.
