@@ -14,6 +14,12 @@ separate from the runnable historical artifacts. See [ANALYSIS.md](ANALYSIS.md)
 for the current assessment and [ROADMAP.md](ROADMAP.md) for conditional future
 work.
 
+## Contributions
+
+This is a maintainer-led educational archive and is not currently accepting
+outside contributions. Please do not open pull requests or expect public
+contributor support.
+
 ## Files
 
 | File | Description |
