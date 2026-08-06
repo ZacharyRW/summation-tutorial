@@ -9,14 +9,14 @@ Order work by learner impact, risk reduction, evidence strength, effort, depende
 
 ## Phase 0: Immediate Safety and Repository Hygiene
 
-No critical security issue, broken test suite, unsafe branch, or default-branch migration is required. Keep protected `main` as default and do not delete branches: it is the only remote branch. Local `main` is one reviewed documentation commit ahead of `origin/main`; do not push it without explicit approval.
+**Completed 2026-08-05.** No critical security issue, broken test suite, unsafe branch, or default-branch migration is required. Keep protected `main` as default and do not delete branches: it is the only remote branch. Do not push local changes without explicit approval.
 
 ## Phase 1: Stabilization
 
-- **TEST-001:** Correct integer-mode test expectations to assert both values and `int` types; preserve the exact-large-integer case.
-- **DOC-002:** State the current package-build decision in README/developer guidance: either supported distribution or tutorial-only tooling metadata.
-- **NB-001:** Execute `notebooks/historical_progression.ipynb` on a normal host/CI runner and record a reproducible result.
-- **GH-005:** Decide whether to enable GitHub secret scanning and push protection. No secret exposure was found, but the live repository reports both controls disabled.
+- **TEST-001 — Completed 2026-08-05:** Integer-mode parser tests now assert exact values and `int` types, including the exact-large-integer regression case.
+- **DOC-002 — Completed 2026-08-05:** README and developer guidance establish the current source-tutorial scope: package distribution is not a supported workflow.
+- **NB-001 — Completed 2026-08-05:** The documented `jupyter nbconvert --execute` command succeeded on the normal host with Python 3.14.6 and Jupyter nbconvert 7.17.1; it wrote the disposable output to `/tmp/historical_progression.executed.ipynb`.
+- **GH-005 — Completed 2026-08-05:** GitHub secret scanning and push protection are enabled and were read back through the GitHub API. No secret exposure was found; these are preventive controls.
 
 ## Phase 2: Maintainability and Developer Experience
 
@@ -48,16 +48,15 @@ No expansion is committed. Hosted lessons, file input, network integrations, pub
 
 ## Documentation Plan
 
-1. Complete `TEST-001` and write the exact numeric contract.
-2. Decide `PKG-001`; update README/setup instructions with the verified path.
-3. Decide `DX-001`; document historical-code formatting scope.
-4. Add `CONTRIBUTING.md`, `SECURITY.md`, changelog, or release guide only when their corresponding workflow exists.
+1. Keep the completed integer type contract and source-tutorial package scope accurate as the lesson evolves.
+2. Decide `DX-001`; document historical-code formatting scope.
+3. Add `CONTRIBUTING.md`, `SECURITY.md`, changelog, or release guide only when their corresponding workflow exists.
 
 ## GitHub Improvement Plan
 
 The live GitHub review is complete: the public description, topics, README presentation, default branch, protections, Actions, Dependabot configuration, Issues, PRs, releases/tags, and repository features were verified. Keep the current description/topics and branch-protection rule; latest `main` CI is green and no Issues or PRs are open. Do not create releases, packages, a homepage, or showcase media unless a distribution goal is selected.
 
-`GH-005` is a preventive decision: enable secret scanning and push protection if the maintainer wants GitHub to enforce that guardrail. This requires an explicit GitHub-setting change and is not evidence of a current secret leak. If external contributions become an active goal, create focused issue forms/templates, a PR template, and a concise `CONTRIBUTING.md`; otherwise the 42% community-profile score is informational rather than a backlog defect. After `PKG-001`/`DX-001`, add only validated checks to the required-check policy. The social-preview asset remains a manual visual setting to review if public showcasing becomes important.
+`GH-005` is complete: secret scanning and push protection were enabled and verified on 2026-08-05. These are preventive controls, not evidence of a current secret leak. If external contributions become an active goal, create focused issue forms/templates, a PR template, and a concise `CONTRIBUTING.md`; otherwise the 42% community-profile score is informational rather than a backlog defect. After `PKG-001`/`DX-001`, add only validated checks to the required-check policy. The social-preview asset remains a manual visual setting to review if public showcasing becomes important.
 
 ## Branch Cleanup Plan
 
@@ -73,9 +72,9 @@ The live GitHub review is complete: the public description, topics, README prese
 
 | ID | Initiative | Priority | Effort | Dependencies | Target phase | Success criteria |
 | --- | --- | --- | --- | --- | --- | --- |
-| TEST-001 | Assert exact integer type contract | High | S | None | 1 | Integer parser tests fail if values become floats. |
-| NB-001 | Verify notebook on socket-capable host | Medium | S | Normal host/CI | 1 | Documented nbconvert command exits 0. |
-| GH-005 | Decide GitHub secret-scanning and push-protection posture | Medium | XS | Maintainer setting decision | 1 | The selected GitHub controls are deliberately enabled or their absence is documented. |
+| TEST-001 | Assert exact integer type contract | High | S | None | 1 (completed) | Integer parser tests fail if values become floats. |
+| NB-001 | Verify notebook on socket-capable host | Medium | S | Normal host/CI | 1 (completed) | Documented nbconvert command exits 0. |
+| GH-005 | Enable GitHub secret scanning and push protection | Medium | XS | None | 1 (completed) | Both controls are enabled and verified through the GitHub API. |
 | PKG-001 | Decide and validate package build | High | S-M | Maintainer decision | 2 | Wheel/sdist build is either green in CI or intentionally unsupported. |
 | DX-001 | Establish formatting policy | Medium | S | Maintainer decision | 2 | `ruff format --check` is green for selected scope. |
 | CI-001 | Align CI with supported validation | Medium | S | PKG-001/DX-001/NB-001 | 2 | Required checks match documented support. |
@@ -91,9 +90,6 @@ The live GitHub review is complete: the public description, topics, README prese
 
 ## Recommended Execution Order
 
-1. Implement and verify TEST-001.
-2. Decide whether the project is a distributable package; execute PKG-001 accordingly.
-3. Run the notebook command outside this sandbox and choose its CI policy.
-4. Decide formatting treatment for historical files, then implement DX-001/CI-001.
-5. Decide `GH-005`; make no GitHub-setting change without explicit approval.
-6. Select at most one Phase 3 improvement.
+1. Decide formatting treatment for historical files, then implement DX-001/CI-001.
+2. Revisit PKG-001 only if a maintainer selects distribution support.
+3. Select at most one Phase 3 improvement.

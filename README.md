@@ -55,6 +55,15 @@ python3 -m venv .venv
 ./.venv/bin/python -m ruff check .
 ```
 
+## Package-build status
+
+This is currently a source-based tutorial, not a supported distributable
+package. Its `pyproject.toml` supplies project and tool metadata, but the
+repository does not promise, validate, or publish wheels or source
+distributions. Do not rely on `pip install .` as a supported workflow. Any
+move to distribution support will add and validate the necessary build path
+before it is documented as supported.
+
 ## Command-line use
 
 Running the module with no arguments starts the interactive lesson. For a
@@ -92,6 +101,11 @@ python3 -m venv .venv
   --output historical_progression.executed.ipynb --output-dir /tmp \
   notebooks/historical_progression.ipynb
 ```
+
+The command was verified successfully on 2026-08-05 with Python 3.14.6,
+Jupyter nbconvert 7.17.1, and the declared notebook dependencies. The
+generated `/tmp/historical_progression.executed.ipynb` is a disposable
+verification artifact and is not tracked.
 
 ## License
 

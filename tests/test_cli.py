@@ -47,5 +47,8 @@ def test_float_flag_requires_one_shot_numbers(capsys):
 
 def test_parse_cli_numbers_returns_typed_values():
     """The parser is directly testable outside the argparse boundary."""
-    assert parse_cli_numbers(["1", "2"], allow_float=False) == [1, 2]
+    integers = parse_cli_numbers(["1", "2"], allow_float=False)
+    assert integers == [1, 2]
+    assert all(isinstance(number, int) for number in integers)
+
     assert parse_cli_numbers(["1.5", "2"], allow_float=True) == [1.5, 2.0]
