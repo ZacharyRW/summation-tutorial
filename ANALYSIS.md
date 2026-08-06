@@ -40,7 +40,7 @@ Recommended direction: retain the focused tutorial-plus-history identity, close 
 | --- | --- | --- |
 | Declared dependency install | Passed | Both requirements files were already satisfied in the repository-local Python 3.14.6 environment. Pip disabled its cache because the host cache was not writable; this did not affect resolution. |
 | Tests | Passed | `./.venv/bin/python -m pytest tests/`: **153 passed**. |
-| Lint | Passed | `./.venv/bin/python -m ruff check .`: `All checks passed!` |
+| Lint | Passed | `./.venv/bin/python -m ruff check .`: `All checks passed!` Re-verified 2026-08-05 under Ruff 0.16.1 with the default rule set and no `select` pin. The original result predates Ruff 0.16, which expanded the git-backed default from 61 to 415 rules; the 42 findings that expansion surfaced were fixed on that date. |
 | Coverage | Observed | `pytest --cov=demos --cov=history`: 55% across maintained plus intentionally historical files; canonical lesson 88%, historical artifacts vary 0–67%. This is diagnostic, not a project coverage target. |
 | Compile check | Passed | `compileall` completed for `demos`, `history`, and `tests`. |
 | CLI smoke tests | Passed | Exact integer and finite-float modes returned expected sums; `nan` exited with argparse error status 2. |

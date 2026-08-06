@@ -6,15 +6,15 @@ import argparse
 import math
 import operator
 import sys
+from collections.abc import Iterable, Sequence
 from functools import reduce
-from typing import Iterable, List, Optional, Sequence, Union
 
-Number = Union[int, float]
+Number = int | float
 
 
 def parse_numbers(
     prompt: str, allow_float: bool = False
-) -> Optional[List[Number]]:
+) -> list[Number] | None:
     """
     Read a space-separated line of finite numbers.
 
@@ -75,9 +75,9 @@ def sum_fsum(nums: Iterable[Number]) -> float:
 
 def parse_cli_numbers(
     raw_numbers: Sequence[str], allow_float: bool = False
-) -> List[Number]:
+) -> list[Number]:
     """Parse command-line numbers using the lesson's numeric contract."""
-    numbers: List[Number] = []
+    numbers: list[Number] = []
     number_type = "finite number" if allow_float else "whole number"
     for raw_number in raw_numbers:
         try:
@@ -144,7 +144,7 @@ def show_many_number_demo() -> bool:
     return True
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     """Run the interactive lesson or one-shot command-line summation."""
     parser = build_argument_parser()
     arguments = parser.parse_args([] if argv is None else argv)

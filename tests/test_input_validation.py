@@ -73,62 +73,76 @@ class TestParseNumbers:
     def test_reject_float_when_not_allowed(self):
         """Test that floats are rejected when allow_float=False."""
         # First attempt with float (invalid), then valid input
-        with patch('builtins.input', side_effect=['3.14', '3']):
-            with patch('builtins.print') as mock_print:
-                result = parse_numbers("Enter: ", allow_float=False)
-                assert result == [3.0]
-                # Verify error message was printed
-                mock_print.assert_called()
+        with (
+            patch('builtins.input', side_effect=['3.14', '3']),
+            patch('builtins.print') as mock_print,
+        ):
+            result = parse_numbers("Enter: ", allow_float=False)
+            assert result == [3.0]
+            # Verify error message was printed
+            mock_print.assert_called()
 
     def test_retry_on_invalid_input(self):
         """Test retry behavior on invalid input."""
         # First attempt invalid, second attempt valid
-        with patch('builtins.input', side_effect=['abc', '42']):
-            with patch('builtins.print') as mock_print:
-                result = parse_numbers("Enter: ", allow_float=False)
-                assert result == [42.0]
-                # Verify error message was printed
-                mock_print.assert_called()
+        with (
+            patch('builtins.input', side_effect=['abc', '42']),
+            patch('builtins.print') as mock_print,
+        ):
+            result = parse_numbers("Enter: ", allow_float=False)
+            assert result == [42.0]
+            # Verify error message was printed
+            mock_print.assert_called()
 
     def test_retry_on_empty_input(self):
         """Test retry behavior on empty input."""
-        with patch('builtins.input', side_effect=['', '10 20']):
-            with patch('builtins.print') as mock_print:
-                result = parse_numbers("Enter: ", allow_float=False)
-                assert result == [10.0, 20.0]
-                # Verify prompt was shown
-                mock_print.assert_called()
+        with (
+            patch('builtins.input', side_effect=['', '10 20']),
+            patch('builtins.print') as mock_print,
+        ):
+            result = parse_numbers("Enter: ", allow_float=False)
+            assert result == [10.0, 20.0]
+            # Verify prompt was shown
+            mock_print.assert_called()
 
     def test_reject_nan_in_integer_mode(self):
         """Test that 'nan' is rejected in integer mode."""
-        with patch('builtins.input', side_effect=['nan', '42']):
-            with patch('builtins.print') as mock_print:
-                result = parse_numbers("Enter: ", allow_float=False)
-                assert result == [42.0]
-                mock_print.assert_called()
+        with (
+            patch('builtins.input', side_effect=['nan', '42']),
+            patch('builtins.print') as mock_print,
+        ):
+            result = parse_numbers("Enter: ", allow_float=False)
+            assert result == [42.0]
+            mock_print.assert_called()
 
     def test_reject_inf_in_integer_mode(self):
         """Test that 'inf' is rejected in integer mode."""
-        with patch('builtins.input', side_effect=['inf', '42']):
-            with patch('builtins.print') as mock_print:
-                result = parse_numbers("Enter: ", allow_float=False)
-                assert result == [42.0]
-                mock_print.assert_called()
+        with (
+            patch('builtins.input', side_effect=['inf', '42']),
+            patch('builtins.print') as mock_print,
+        ):
+            result = parse_numbers("Enter: ", allow_float=False)
+            assert result == [42.0]
+            mock_print.assert_called()
 
     @pytest.mark.parametrize('nonfinite', ['nan', 'inf', '-inf'])
     def test_reject_nonfinite_float_input(self, nonfinite):
         """Float mode accepts finite values only."""
-        with patch('builtins.input', side_effect=[nonfinite, '1.25']):
-            with patch('builtins.print') as mock_print:
-                assert parse_numbers("Enter: ", allow_float=True) == [1.25]
-                mock_print.assert_called()
+        with (
+            patch('builtins.input', side_effect=[nonfinite, '1.25']),
+            patch('builtins.print') as mock_print,
+        ):
+            assert parse_numbers("Enter: ", allow_float=True) == [1.25]
+            mock_print.assert_called()
 
     def test_eof_returns_none_with_friendly_message(self):
         """Closed standard input should not leak an EOFError."""
-        with patch('builtins.input', side_effect=EOFError):
-            with patch('builtins.print') as mock_print:
-                assert parse_numbers("Enter: ", allow_float=False) is None
-                mock_print.assert_called_with("Input closed. Exiting this demo.")
+        with (
+            patch('builtins.input', side_effect=EOFError),
+            patch('builtins.print') as mock_print,
+        ):
+            assert parse_numbers("Enter: ", allow_float=False) is None
+            mock_print.assert_called_with("Input closed. Exiting this demo.")
 
     def test_whitespace_handling(self):
         """Test handling of extra whitespace."""
