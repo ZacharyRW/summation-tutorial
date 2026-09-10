@@ -169,6 +169,8 @@ Jupyter nbconvert 7.17.1, and the declared notebook dependencies. The
 generated `/tmp/historical_progression.executed.ipynb` is a disposable
 verification artifact and is not tracked.
 
+![Alt](https://repobeats.axiom.co/api/embed/4efc3f5898a19d344ec99992bf00b0bbe6e6dad8.svg "Repobeats analytics image")
+
 ## License
 
 This project is licensed under the [GNU General Public License v3.0](LICENSE).
